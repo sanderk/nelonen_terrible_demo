@@ -1,0 +1,14 @@
+---
+vmprefix: supla
+cluster: operations
+product: supla
+environment: development
+clone_protocol: ssh
+nodes:
+  web_server:
+    hostname: supla.development.sanomaservices.nl
+    ip: 192.168.98.236
+    box: 'centos7-latest'
+    memory: 1024
+    cpus: 1
+    role: web_server

@@ -1,0 +1,12 @@
+---
+galaxy_info:
+  author: Tibo Beijen
+  description: 
+  company: Sanoma
+  min_ansible_version: 1.9
+  platforms:
+  - name: EL
+    versions:
+    - 6
+    - 7
+dependencies: []

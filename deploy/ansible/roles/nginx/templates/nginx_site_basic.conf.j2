@@ -1,0 +1,66 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "false"
+{% if item.cors_domains is defined and item.cors_domains %}
+map $http_origin $cors {
+   default "";
+   include /etc/nginx/cors-whitelist_{{ item.name }}.map;
+}
+{% endif %}
+
+map $request $loggable {
+    {% if item.log_ignore_urls is defined %}
+    {% for url in item.log_ignore_urls %}
+    {{ url }} 0;
+    {% endfor %}
+    {% endif %}
+    default 1;
+}
+
+server {
+{% include "nginx_site.fragment.listen.j2" with context %}
+
+  server_name {{ item.server }};
+
+  client_max_body_size {{ item.client_max_body_size | default("10m")}};
+  add_header X-Id {{ ansible_hostname }};
+  access_log {{ item.log_path }}/access_log {{ item.log_format|default("combined_microseconds") }} if=$loggable;
+  error_log {{ item.log_path }}/error_log;
+
+  {% if item.auth_auth_basic_user_file is defined and item.auth_auth_basic_user_file %}
+  auth_basic	  "Private";
+  auth_basic_user_file {{ item.auth_basic_user_file }};
+  {% endif %}
+
+{% for l in item.locations %}
+    location {{ l.match }} {
+        {% if l.cors is defined and l.cors %}
+            {% include 'cors.conf.j2' with context %}
+        {% endif %}
+        {% if l.params is defined %}
+
+            {% if l.params is mapping %}
+                {% set params = [l.params] %}
+            {% else %}
+                {% set params = l.params %}
+            {% endif %}
+
+            {% for param in params %}
+                {% for key, val in param.iteritems() %}
+                    {% if val is string %}
+                        {{ key }} {{ val }};
+                    {% else %} {# if not a string we assume a list, mapping could be added if we have a use case #}
+                        {% for v in val %}
+                            {{ key }} {{ v }};
+                        {% endfor %}
+                    {% endif %}
+                {% endfor %}
+            {% endfor %}
+        {% endif %}
+        {% if l.alias is defined %}
+            alias {{ l.alias }};
+        {% endif %}
+        {% if l.raw is defined %}
+            {{- l.raw|indent(6, True) }}
+        {% endif %}
+    }
+{% endfor %}
+}

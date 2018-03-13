@@ -1,0 +1,41 @@
+- name: Install PHP CLI
+  yum:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - php-cli
+
+- name: Install PHP FPM
+  yum:
+    pkg: "php-fpm"
+    state: present
+  when: php_enable_fpm
+
+- name: Enable PHP FPM service
+  service:
+    name: php-fpm
+    enabled: true
+    state: started
+  when: php_enable_fpm
+
+- name: Create php.ini
+  template:
+    src: php.ini.j2
+    dest: /etc/php.ini
+    owner: root
+    group: root
+    mode: '0664'
+  when:
+    php_manage_ini == True
+
+- name: Install PHP modules
+  yum:
+    pkg: "php-{{item}}"
+    state: present
+  with_items: "{{php_modules}}"
+
+- name: Install Apache mod_php
+  yum:
+    pkg: php
+    state: present
+  when: php_enable_modphp

@@ -1,0 +1,20 @@
+---
+- include: install_nginx.yml
+  when: nginx_package_source == 'nginx'
+
+- include: install_openresty.yml
+  when: nginx_package_source == 'openresty'
+
+- include: finalize_install.yml
+
+- include: setup_lua_scripts.yml
+  when: nginx_package_source == 'openresty'
+
+- include: setup_site.yml
+  with_items: "{{ nginx_sites }}"
+  when: nginx_sites is defined
+
+- include: logrotate_nginx.yml
+  when: nginx_sites is defined
+
+- include: setup_monitor.yml

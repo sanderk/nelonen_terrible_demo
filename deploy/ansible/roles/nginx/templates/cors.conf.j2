@@ -1,0 +1,33 @@
+{% if item.cors_domains is defined and item.cors_domains %}
+      if ($cors = "") {
+        {# We need to duplicate because of the weird nginx IF scopes behaviours #}
+        {% if item.root_headers is defined %}
+          {% for header in item.root_headers %}
+        add_header {{ header.name }} "{{ header.value }}";
+          {% endfor %}
+        {% endif %}
+        add_header 'Access-Control-Allow-Origin' $cors;
+        add_header 'Access-Control-Max-Age' 60; # valid for 1min
+        return 403 "This origin is not allowed by our CORS rules";
+       }
+
+      if ($request_method = 'OPTIONS') {
+        {# We need to duplicate because of the weird nginx IF scopes behaviours #}
+        {% if item.root_headers is defined %}
+           {% for header in item.root_headers %}
+        add_header {{ header.name }} "{{ header.value }}";
+           {% endfor %}
+        {% endif %}
+        add_header 'Access-Control-Allow-Origin' $cors;
+        add_header 'Access-Control-Allow-Credentials' 'true';
+        add_header 'Access-Control-Allow-Methods' '*';
+        add_header 'Access-Control-Max-Age' 86400; # valid for 24h
+        add_header Content-Length 0;
+        add_header Content-Type text/plain;
+        return 204;
+      }
+
+      add_header 'Access-Control-Allow-Origin' $cors always;
+      add_header 'Access-Control-Allow-Credentials' 'true' always;
+      add_header 'Access-Control-Allow-Methods' '*' always;
+{% endif %}

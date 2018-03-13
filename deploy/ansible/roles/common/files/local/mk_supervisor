@@ -1,0 +1,24 @@
+#!/bin/bash
+#
+# Check_MK test for Supervisor.
+#
+# Returns a status line for each "program" configured.
+#
+if ls /etc/supervisor/conf.d/*.conf &> /dev/null ; then
+  PROGRAMS=`cat /etc/supervisor/conf.d/*.conf | grep '^\[program:.*\]' | sed -e 's/^.*://' -e 's/\]$//'`
+
+  if [ -n "$PROGRAMS" ] ; then
+    for PROGRAM in $PROGRAMS ; do
+      SUPERVISOR_STATUS=`/usr/bin/supervisorctl status ${PROGRAM} | sed 's/  */ /g'`
+
+      echo $SUPERVISOR_STATUS | grep RUNNING > /dev/null
+      case $? in
+        0) CHECK_MK_STATUS=0;;
+        1) CHECK_MK_STATUS=2;;
+        *) CHECK_MK_STATUS=3;;
+      esac
+
+      echo "${CHECK_MK_STATUS} ${PROGRAM} - Supervisor[${SUPERVISOR_STATUS}]"
+    done
+  fi
+fi

@@ -1,0 +1,62 @@
+---
+- name: Install deps
+  yum: name={{ item }}
+       state=present
+  with_items:
+    - xinetd
+
+- name: Install check_mk_agent
+  yum: >
+    name=check-mk-agent
+    state=present
+  notify:
+    - restart xinetd
+
+- name: Ensure check_mk_agent is running
+  service: >
+    name=xinetd
+    state=started
+    enabled=yes
+
+- name: Create directories for periodic checks
+  file:
+    dest: "/usr/share/check-mk-agent/local/{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - 600
+    - 7200
+
+- name: Remove local-checks and plugins
+  file:
+    path: "/usr/share/check-mk-agent/{{ item }}"
+    state: absent
+  with_items:
+    - local/aws_metrics
+    - local/ec2_events
+    - local/86400
+
+- name: Install local-checks and plugins
+  copy:
+    src: "{{ item }}"
+    dest: "/usr/share/check-mk-agent/{{ item }}"
+    mode: 0755
+  with_items:
+    - local/mk_services
+    - local/600/aws_metrics
+    - local/7200/ec2_events
+
+- name: check if monitor host is reachable
+  wait_for:
+    host: "{{ monitor_host }}"
+    port: 80
+    timeout: 3
+  register: monitor_host_available
+  ignore_errors: true
+
+- name: download mk_inventory plugin
+  get_url:
+    url: "http://{{ monitor_host }}/monitor/check_mk/agents/plugins/mk_inventory.linux"
+    dest: "/usr/share/check-mk-agent/plugins/mk_inventory"
+    mode: 0755
+  when: monitor_host_available | succeeded

@@ -1,0 +1,47 @@
+---
+stage: staging
+product: kitchen
+cluster: operations
+environment: staging
+deployment: staging
+role: kitchen-test
+
+common_use_dnsmasq: true
+
+common_admin_users:
+  - name: t.est
+    comment: "test user"
+    groups: admins,adm,wheel
+    sudo: false
+    shell: /bin/bash
+    home: /home
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAteststring"
+
+users:
+  - name: tes.t
+    comment: "second test user"
+    sudo: false
+    groups: developers
+    mode: "u=rwx,g=rx,o=rx"
+    create_log_dir: true
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAsecondteststring"
+    private_keys:
+      - name: test_key
+        value: |
+          -----BEGIN RSA PRIVATE KEY-----
+          MIICXAIBAAKBgQDF/S5Pu7ljvcbA5NOnFMhkGqY2nkaSND+oELIOaEEJh5c3aWWl
+          qRmlAcKx5H9jGGwZEGI6bdMRfUaXft02bZzj6adSesbfpi6tvxaNXX5iKlknUQUK
+          8jVs8eqv6VJJS/8x9AXUth/pmuIb2tRSzovP9k0NYa31fnXuG2Z36A6TOwIDAQAB
+          AoGAPYnOJTZCD0BjUH1PU/Vfu82UsBFN+g+HYaOe1F+PJ3kfhTebQnxm3iTH8ScG
+          eTSUFM5E2chc/Gil0ly6QTqcsqZvFQ5GhoyZjGtDRYtJIEhDqyyh3xi2+T2/mhgJ
+          otLZxWDifm4ygzxCo2ZduPgj6mtnm3xtnrcay8VrszeqdxECQQDh9eTKaKJXdzvH
+          9+q16W/oK+Qrq1mBmsfbiyU4Kwf7yCudUFPzMvpy15NuUhiUUcIW3EL8c41izSn/
+          v4IsAaNNAkEA4E9VPZth8K9wf04Uglk0sq6Ddmw4lVm/MY8GFZIxmQx34/G1vMFu
+          wdGUzYQFOC4B6saw25mg+r0Qakf3ehM8pwJAbww5dIAXyISAjLX6U4x1wtRPPmbn
+          hhpbPjoUAJalRcgKJzXjDBJxox7vBbiy+7FygWmeQhNH2NabXWTwxE/JwQJAcMeS
+          jSot4SzkfC2O5Ebj1x8lXApnnLgGCG3n2jqqE1CQixxBiwkanfq5PWeulCOVtSx3
+          ScKBjPA4a6eJh2haqwJBAMRtsXrAW+SzDzlyhzHhOm6HseHjiQ91mD82+hhw45JV
+          dK797VAbTFZuVb9i82uuLrX8dFS7Fy13cOk/3mdmfWc=
+          -----END RSA PRIVATE KEY-----

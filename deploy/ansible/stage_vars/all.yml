@@ -1,0 +1,6 @@
+# 'all' stage vars
+---
+
+supla_ssh_key: |
+  -----BEGIN RSA PRIVATE KEY-----
+  -----END RSA PRIVATE KEY-----

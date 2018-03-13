@@ -1,0 +1,11 @@
+# resolv.conf is managed by Ansible
+# It is configured the way that you always try your nearest resolver.
+
+
+search {{ common_search_domains|join(' ') }}
+
+{% for entry in nameservers[ansible_ec2_placement_availability_zone] %}
+nameserver {{ entry }}
+{% endfor %}
+
+options timeout:1

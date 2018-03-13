@@ -1,0 +1,124 @@
+---
+# defaults file for php
+php_version: '7.0'
+
+php_manage_ini: True
+
+php_modules: []
+
+php_zend_modules:
+  - gd
+  - mbstring
+  - memcached
+  - soap
+
+php_enable_modphp: False
+php_enable_fpm: False
+
+php_enable_zend_server: False
+
+php_ini_settings:
+  date:
+    timezone: 'Europe/Amsterdam'
+  mail:
+    add_x_header: 'On'
+  phar:
+    readonly: null
+  user_ini:
+    filename: '.user.ini'
+    cache_ttl: 300
+  engine: 'On'
+  short_open_tag: 'On'
+  asp_tags: 'Off'
+  precision: 14
+  output_buffering: 4096
+  zlib:
+    output_compression: 'Off'
+  implicit_flush: 'Off'
+  serialize_precision: 100
+  allow_call_time_pass_reference: 'Off'
+  safe_mode: 'Off'
+  safe_mode_gid: 'Off'
+  safe_mode_include_dir: null
+  safe_mode_exec_dir: null
+  safe_mode_allowed_env_vars: PHP_
+  safe_mode_protected_env_vars: LD_LIBRARY_PATH
+  disable_functions: null
+  disable_classes: null
+  ignore_user_abort: null
+  expose_php: 'Off'
+  max_execution_time: 30
+  max_input_time: 60
+  max_input_vars: 1000
+  memory_limit: 128M
+  error_reporting: 'E_ALL & ~E_NOTICE'
+  display_errors: 'Off'
+  display_startup_errors: 'Off'
+  log_errors: 'On'
+  log_errors_max_len: 1024
+  ignore_repeated_errors: 'Off'
+  ignore_repeated_source: 'Off'
+  report_memleaks: 'On'
+  track_errors: 'Off'
+  html_errors: 'Off'
+  error_log: null
+  variables_order: GPCS
+  request_order: GP
+  register_globals: 'Off'
+  register_long_arrays: 'Off'
+  register_argc_argv: 'Off'
+  auto_globals_jit: 'On'
+  post_max_size: 8M
+  magic_quotes_gpc: 'Off'
+  magic_quotes_runtime: 'Off'
+  magic_quotes_sybase: 'Off'
+  auto_prepend_file: null
+  auto_append_file: null
+  default_mimetype: "text/html"
+  default_charset: null
+  always_populate_raw_post_data: null
+  include_path: null
+  doc_root: null
+  user_dir: null
+  enable_dl: 'Off'
+  cgi:
+    fix_pathinfo: null
+  file_uploads: 'On'
+  upload_tmp_dir: null
+  upload_max_filesize: 2M
+  max_file_uploads: 20
+  allow_url_fopen: 'On'
+  allow_url_include: 'Off'
+  default_socket_timeout: 60
+  sendmail_path: '/usr/sbin/sendmail -t -i'
+  sql:
+    safe_mode: 'Off'
+  browscap: null
+  session:
+    save_handler: files
+    save_path: /var/lib/php/session
+    use_cookies: 1
+    use_only_cookies: 1
+    name: PHPSESSID
+    auto_start: 0
+    cookie_lifetime: 0
+    cookie_path: '/'
+    cookie_domain: null
+    cookie_httponly: null
+    serialize_handler: php
+    gc_probability: 1
+    gc_divisor: 1000
+    gc_maxlifetime: 1440
+    bug_compat_42: 'Off'
+    bug_compat_warn: 'Off'
+    referer_check: null
+    hash_function: 0 # 0=MD5; 1=SHA-1
+    hash_bits_per_character: 5
+  url_rewriter:
+    tags: 'a=href,area=href,frame=src,input=src,form=fakeentry'
+  soap:
+    wsdl_cache_enabled: 1
+    wsdl_cache_dir: /tmp
+    wsdl_cache_ttl: 86400
+
+php_ini_custom_settings: {}

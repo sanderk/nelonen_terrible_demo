@@ -1,0 +1,42 @@
+---
+# Package source. Options: nginx, openresty.
+# Openresty installs openresty nginx bundle, including Lua.
+nginx_package_source: nginx
+
+# user to run as, as stated in nginx.conf
+nginx_user: nginx
+
+# sendfile on (yes) or off
+nginx_sendfile: yes
+
+# if true, will enable default_server config, responding to monitor/monitor.html
+nginx_enable_monitor: true
+
+# If wanting to disable /etc/nginx/conf.d/default.conf, set this to no
+nginx_enable_default_conf: yes
+
+nginx_worker_rlimit_nofile: 1024
+nginx_events_worker_connections: 1024
+
+nginx_keepalive_timeout: 75
+
+nginx_client_max_body_size: 10m
+nginx_client_body_buffer_size: 128k
+
+nginx_proxy_connect_timeout: 60
+nginx_proxy_send_timeout: 60
+nginx_proxy_read_timeout: 60
+
+nginx_redirect_to_https: false
+nginx_real_ip: false
+nginx_log_formats: {}
+
+# When using cors whitelisting, allow request without Origin header or not
+nginx_allow_no_origin: true
+
+# Files to copy to /etc/nginx/lua/ (openresty mode only)
+nginx_lua_scripts: []
+
+# Cache configurations
+nginx_cache_root: /data/nginx_cache
+nginx_cache_paths: []

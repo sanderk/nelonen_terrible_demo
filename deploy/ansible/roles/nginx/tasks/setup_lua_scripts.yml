@@ -1,0 +1,14 @@
+---
+- name: Add Lua scripts dir
+  file:
+    path: /etc/nginx/lua/
+    state: directory
+    mode: 0755
+
+- name: Copy lua scripts
+  copy:
+    dest: /etc/nginx/lua/{{ item }}
+    src: "{{ item }}"
+    mode: 0644
+  with_items: "{{ nginx_lua_scripts }}"
+  notify: reload nginx

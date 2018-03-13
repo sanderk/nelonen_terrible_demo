@@ -1,0 +1,78 @@
+---
+driver:
+  name: ec2
+  instance_initiated_shutdown_behavior: terminate
+  region: eu-west-1
+  user_data: cloud-init.yaml
+  instance_type: t2.medium
+  associate_public_ip: false
+  interface: private_dns
+
+transport:
+  ssh_key: /data/home/bamboo/.ssh/id_rsa
+  connection_timeout: 10
+  connection_retries: 5
+  username: centos
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  roles_path: '<%= ENV['ROLES_PATH'] %>'
+  ansible_version: 2.2.1
+  require_pip: true
+  require_ansible_repo: true
+  ansible_verbose: true
+  require_chef_for_busser: false
+
+platforms:
+  - name: c72-latest
+    driver:
+      image_id: ami-852b0df6
+
+verifier:
+  name: serverspec
+  default_pattern: true
+  gemfile: spec/Gemfile
+  test_serverspec_installed: false
+  additional_serverspec_command: cp -f /tmp/verifier/suites/serverspec/* /tmp/verifier/serverspec/
+
+suites:
+  - name: development
+    provisioner:
+      additional_copy_path: extra_vars_development.yml
+      ansible_extra_flags: "--extra-vars @/tmp/kitchen/extra_vars_development.yml"
+    driver:
+      availability_zone: a
+      subnet_id: subnet-a4d6fcd0
+      tags:
+        Name: "bamboo-build"
+        cluster: "core-services"
+        product: "test-kitchen"
+        environment: "test"
+        setting: "development"
+  - name: resolver
+    provisioner:
+      additional_copy_path: extra_vars_resolver.yml
+      ansible_extra_flags: "--extra-vars @/tmp/kitchen/extra_vars_resolver.yml"
+    driver:
+      availability_zone: a
+      subnet_id: subnet-a4d6fcd0
+      tags:
+        Name: "bamboo-build"
+        cluster: "core-services"
+        product: "test-kitchen"
+        environment: "test"
+        setting: "resolver"
+  - name: dnsmasq
+    provisioner:
+      additional_copy_path: extra_vars_dnsmasq.yml
+      ansible_extra_flags: "--extra-vars @/tmp/kitchen/extra_vars_dnsmasq.yml"
+    driver:
+      availability_zone: b
+      subnet_id: subnet-f0ee37a9
+      tags:
+        Name: "bamboo-build"
+        cluster: "operations"
+        product: "test-kitchen"
+        environment: "test"
+        setting: "dnsmasq"

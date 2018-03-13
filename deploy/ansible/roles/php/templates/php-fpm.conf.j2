@@ -1,0 +1,20 @@
+include=etc/{{ (php_version == '7.0') | ternary('php-fpm.d', 'fpm.d') }}/*.conf
+
+[global]
+pid = /var/run/php-fpm.pid
+daemonize = yes
+
+{% if php_version | version_compare('7.0', '<') %}
+; This is an example, create your own configuration in fpm.d
+[example]
+user = nobody
+group = nobody
+listen = /usr/local/zend/tmp/php-fpm.sock
+listen.owner = root
+listen.group = root
+pm = dynamic
+pm.max_children = 5
+pm.start_servers = 2
+pm.min_spare_servers = 1
+pm.max_spare_servers = 3
+{% endif %}

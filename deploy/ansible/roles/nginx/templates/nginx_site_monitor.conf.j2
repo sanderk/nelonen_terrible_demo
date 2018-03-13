@@ -1,0 +1,15 @@
+server {
+  listen *:80 default_server;
+  server_name _;
+
+  client_max_body_size 10k;
+
+  add_header X-Id {{ ansible_hostname }};
+
+  access_log /var/log/nginx/monitor.access.log ;
+  error_log  /var/log/nginx/monitor.error.log;
+
+  location /monitor/monitor.html {
+    return 200 'OK';
+  }
+}

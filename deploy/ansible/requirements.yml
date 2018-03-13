@@ -1,0 +1,13 @@
+- name: common
+  src: ssh://git@source.sanoma.com:7999/ansible/common.git
+  scm: git
+
+- name: nginx
+  src: ssh://git@source.sanoma.com:7999/ansible/nginx.git
+  scm: git
+  version: ac429ad5c9b42955724c7ebe2d039d21a2410517
+
+- name: php
+  src: ssh://git@source.sanoma.com:7999/ansible/php.git
+  scm: git
+  version: 6c4583a9437e0ffd0e2844e8639aed20dec4eefb

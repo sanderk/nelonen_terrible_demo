@@ -1,0 +1,13 @@
+---
+- name: Install postfix and dependencies
+  yum: >
+    name={{ item }} state=present
+  with_items:
+    - postfix
+
+- name: Configure postfix so it will use smarthost.aws.sanomahost.nl
+  template: >
+    src=postfix_main.cf.j2
+    dest=/etc/postfix/main.cf
+  notify:
+    - restart postfix

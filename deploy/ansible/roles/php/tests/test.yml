@@ -1,0 +1,9 @@
+---
+- hosts: localhost
+  connection: local
+  remote_user: root
+  roles:
+    - php
+  vars:
+    php_version: '5.6'
+    php_enable_fpm: true

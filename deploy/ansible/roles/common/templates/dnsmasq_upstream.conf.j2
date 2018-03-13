@@ -1,0 +1,10 @@
+# Ansbile generated config for dnsmasq
+
+server={{ common_upstream_nameserver }}
+
+{% for domain, iplist in common_dnsmasq_config.iteritems() -%}
+{% for ip in iplist -%}
+server=/{{ domain }}/{{ ip }}
+{% endfor %}
+{% endfor -%}
+

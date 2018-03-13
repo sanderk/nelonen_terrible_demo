@@ -1,0 +1,39 @@
+---
+- name: Install dependencies
+  yum: >
+    name=bc
+    state=present
+
+- name: Install aws-script
+  copy: >
+    src=aws_backup.sh
+    dest=/usr/local/bin/aws_backup.sh
+    mode=0755
+
+- name: Create config-file
+  template: >
+    src=aws_backup.j2
+    dest=/etc/sysconfig/aws_backup
+    mode=0600
+
+- name: Create backup-log-dir
+  file:
+    path="/data/logs/backup"
+    state=directory
+    recurse=yes
+
+- name: Create backup data dir
+  file:
+    path: /data/backup
+    state: directory
+    mode: 0777
+    recurse: yes
+
+# Only add cronjob if hostname length < 64. We do need to fix this!
+- name: Create Cron-job
+  cron: >
+    name="awsbackup"
+    minute="{{ (((ansible_eth0.ipv4.address.split('.')[-1] | int) /254)*59 )| int }}" 
+    hour="6" 
+    job="/usr/local/bin/aws_backup.sh >> /data/logs/backup/awsbackup.log"
+  when: ansible_eth0.ipv4.address is defined and ansible_fqdn|length<64
