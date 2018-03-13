@@ -1,7 +1,7 @@
-#
-# my first variables
-#
+variable "az" {
+  default = "eu-west-*"
+}
 variable "instance_count" {
-  description: "Number of instances"
-  value : 3
+  type    = "string"
+  default = 2
 }
