@@ -4,4 +4,5 @@ module "web_server" {
   name            = "webserver"
   tags            = "${var.tags}"
   count           = "${var.instance_count}"
+  timezone        = "Europe/Helsinki"
 }
