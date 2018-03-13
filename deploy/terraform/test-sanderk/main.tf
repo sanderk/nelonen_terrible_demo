@@ -6,4 +6,5 @@ module "web_server" {
   name   = "webserver"
   tags   = "${var.tags}"
   count  = "${var.instance_count}"
+  vpc_id = "vpc-0e942268"
 }
