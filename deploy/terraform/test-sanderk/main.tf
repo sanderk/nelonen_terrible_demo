@@ -2,9 +2,10 @@
 # Hello World Web Server
 #
 module "web_server" {
-  source          = "git::ssh://git@source.sanoma.com:7999/tfmod/ec2.git?ref=master"
-  name            = "webserver"
-  tags            = "${var.tags}"
-  count           = "${var.instance_count}"
-  time_zone        = "${var.timezone}"
+  source = "git::ssh://git@source.sanoma.com:7999/tfmod/ec2.git?ref=feature/multiaccount"
+  name   = "webserver"
+  tags   = "${var.tags}"
+  count  = "${var.instance_count}"
+  vpc_id = "vpc-0e942268"
+  image  = "centos7-201801241238"
 }
