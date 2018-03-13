@@ -1,3 +1,8 @@
+variable "az" {
+  default = "eu-west-*"
+}
+
 variable "instance_count" {
-    value: 3
+  type    = "string"
+  default = 2
 }
