@@ -6,7 +6,7 @@ module "web_server" {
   name   = "webserver"
   tags   = "${var.tags}"
   count  = "${var.instance_count}"
-  volume_size = "17G"
+  volume_size = "17GB"
   vpc_id = "vpc-0e942268"
   image  = "centos7-201801241238"
 }
