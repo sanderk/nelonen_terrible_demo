@@ -4,5 +4,5 @@ module "web_server" {
   name            = "webserver"
   tags            = "${var.tags}"
   count           = "${var.instance_count}"
-  volume_size     = "17G"
+  volume_size     = 17
 }
