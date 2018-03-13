@@ -6,5 +6,5 @@ module "web_server" {
   name            = "webserver"
   tags            = "${var.tags}"
   count           = "${var.instance_count}"
-  timezone        = "${var.timezone}"
+  time_zone        = "${var.timezone}"
 }
