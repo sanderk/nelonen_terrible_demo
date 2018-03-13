@@ -1,0 +1,44 @@
+- name: Install Zend FPM
+  yum:
+    pkg: "php-{{php_version}}-fpm-zend-server"
+    state: present
+
+- name: Set Up FPM Symlinks
+  file:
+    dest: "{{ item.dest }}"
+    state: link
+    src: "{{ item.src }}"
+  with_items:
+    - dest: '/usr/local/bin/php-fpm'
+      src: '/usr/local/zend/bin/php-fpm'
+
+- name: Create php-fpm.conf
+  template:
+    src: php-fpm.conf.j2
+    dest: /usr/local/zend/etc/php-fpm.conf
+    owner: root
+    group: zend
+    mode: '0664'
+  notify: restart php-fpm
+
+- name: Install Zend FPM init script
+  copy:
+    dest: /etc/init.d/php-fpm
+    src: zend-php-fpm.init
+    owner: root
+    group: zend
+    mode: '0755'
+
+- name: Generate systemd unit
+  command: systemctl daemon-reload
+  args:
+    creates: /run/systemd/generator.late/php-fpm.service
+  when:
+    - ansible_distribution_major_version == '7'
+    - ansible_distribution == 'CentOS'
+
+- name: Enable Zend FPM service
+  service:
+    name: php-fpm
+    state: started
+    enabled: true

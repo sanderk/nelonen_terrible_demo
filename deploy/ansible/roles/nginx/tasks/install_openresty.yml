@@ -1,0 +1,63 @@
+---
+- name: Check if OS has systemd
+  stat:
+    path: /bin/systemctl
+  register: has_systemd
+
+- name: Fail if not systemd
+  fail:
+    msg: Installation of openresty is not supported by this role if OS does not use systemd.
+  when: not has_systemd.stat.exists
+
+- name: add openresty repo
+  template:
+    src: openresty.repo.j2
+    dest: /etc/yum.repos.d/openresty.repo
+    mode: 0644
+  become: yes
+
+- name: Install OpenResty (Nginx + addons)
+  yum:
+    name: openresty
+    state: present
+    enablerepo: openresty
+  become: yes
+
+- name: Add nginx user
+  user:
+    name: nginx
+    home: /var/cache/nginx
+    createhome: no
+    shell: /sbin/nologin
+
+- name: Add nginx etc and log dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+    mode: 0755
+  with_items:
+    - /var/log/nginx
+    - /etc/nginx
+    - /etc/nginx/conf.d
+
+- name: Symlink openresty nginx config files to /etc/nginx/
+  file:
+    path: /etc/nginx/{{ item }}
+    state: link
+    src: /usr/local/openresty/nginx/conf/{{ item }}
+  with_items:
+    - fastcgi_params
+    - koi-utf
+    - koi-win
+    - mime.types
+    - scgi_params
+    - uwsgi_params
+    - win-utf
+
+- name: Setup systemd service
+  template:
+    src: nginx_openresty.service.j2
+    dest: /etc/systemd/system/nginx.service
+    mode: 0644
+  become: yes
+

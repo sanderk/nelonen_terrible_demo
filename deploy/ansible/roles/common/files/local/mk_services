@@ -1,0 +1,64 @@
+#!/usr/bin/ruby
+#
+# Checks all services if they are running, if it should running according to
+# the configuration. (init level 3 is the default runlevel)
+#
+require 'yaml'
+
+
+localconfig = '/etc/check-mk-agent/mk_services.yaml'
+
+if File.exists?("#{localconfig}") then
+  cnf = YAML::load_file("#{localconfig}")
+else
+  cnf = {}
+end
+
+cfg_blacklisted=cnf['blacklisted'].nil? ? '' : cnf['blacklisted']
+cfg_whitelisted=cnf['whitelisted'].nil? ? '' : cnf['whitelisted']
+
+performance_data = '-'
+status = 0
+message = ''
+
+blacklisted_services = 'acpid cloud-config cloud-final cloud-init cloud-init-local cpuspeed mdmonitor iptables ip6tables lvm2-monitor kdump irqbalance sysstat rpcgssd iscsi iscsid firstboot rpcbind mcstrans portreserve anacron merlind dkms_autoinstaller ksm ksmtuned cj_update cj.srv gcb.srv mytomcat nodejs node-daemon.sh apache2 celeryd_prod_w1 celeryd_prod_w2'
+blacklisted_systemctl_services = 'autovt@ getty@ microcode systemd-readahead-collect systemd-readahead-drop systemd-readahead-replay'
+
+whitelisted_services = ''
+
+if system('type systemctl > /dev/null 2>&1') then
+    listed_services = `systemctl list-unit-files --type=service | grep enabled |  awk '{print $1}' | awk -F'.' '{print $1}'`
+    services = listed_services.split - ((blacklisted_services.split + cfg_blacklisted.split + blacklisted_systemctl_services.split) - (whitelisted_services.split + cfg_whitelisted.split))
+
+    services.each do |service|
+        if service == 'chronyd' && services.include?('ntpd') then next end
+        `systemctl status #{service} &>/dev/null`
+        if $?.exitstatus > 0 then
+            status = 2
+            message = "#{message} #{service} is down(!!)"
+        end
+    end
+else
+    listed_services = `chkconfig --list | awk '/3:on/{print $1}'`
+    services = listed_services.split - ((blacklisted_services.split + cfg_blacklisted.split) - (whitelisted_services.split + cfg_whitelisted.split))
+
+    services.each do |service|
+
+        if service == 'php-fpm' then
+            if not File.exists?('/var/run/php-fpm.pid') then
+                status = 2
+                message = "#{message} #{service} is down(!!)"
+            end
+        else
+            `service #{service} status &>/dev/null`
+            if $?.exitstatus > 0 then
+                status = 2
+                message = "#{message} #{service} is down(!!)"
+            end
+        end
+    end
+end
+
+message = "Everything running fine" if message == ''
+
+puts "#{status} Services #{performance_data} #{message}"

@@ -1,0 +1,39 @@
+---
+# Install and configure dnsmasq
+#
+- name: Install dnsmasq
+  yum:
+    name: dnsmasq
+    state: present
+  tags:
+    - dnsmasq
+
+- name: Configure dnsmasq
+  template:
+    src: "dnsmasq_{{ item }}.j2"
+    dest: "/etc/dnsmasq.d/{{ item }}"
+  with_items:
+    - upstream.conf
+  notify:
+    - restart dnsmasq
+  tags:
+    - dnsmasq
+
+- name: Configure resolv.conf
+  copy:
+    content: |
+      search {{ common_search_domains | join(' ') }}
+      nameserver {{ ansible_default_ipv4['address'] }}
+    dest: /etc/resolv.conf
+  notify:
+    - restart dnsmasq
+  tags:
+    - dnsmasq
+
+- name: Start service dnsmasq
+  service:
+    name: dnsmasq
+    state: started
+    enabled: yes
+  tags:
+    - dnsmasq

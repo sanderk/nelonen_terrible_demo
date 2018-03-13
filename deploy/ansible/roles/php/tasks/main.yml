@@ -1,0 +1,13 @@
+---
+- name: Check PHP version
+  fail:
+    msg: "Unsupported PHP version {{ php_version }}!"
+  when: php_version not in php_versions
+
+- include: zend.yml
+  static: false
+  when: php_version != 'system'
+
+- include: system.yml
+  static: false
+  when: php_version == 'system'

@@ -1,0 +1,31 @@
+---
+# tasks file for common
+- name: Gather EC2 facts
+  action: ec2_facts
+  when: common_gather_ec2_facts
+
+- include: structure.yml
+
+- block:
+  - include: dnsmasq.yml
+    when: common_use_dnsmasq
+
+  - include: resolver.yml
+    when: not common_use_dnsmasq
+  when: stage != "development"
+
+
+- include: usermanagement.yml
+
+- include: motd.yml
+
+- include: monitor.yml
+  when: stage in common_monitor_stages
+
+- include: postfix.yml
+  when: common_manage_postfix
+
+- include: awsbackup.yml
+  when: stage != "development"
+
+- include: serf_cleanup.yml

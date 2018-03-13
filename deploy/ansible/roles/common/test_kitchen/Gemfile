@@ -1,0 +1,16 @@
+source "https://rubygems.org"
+
+gem 'test-kitchen', '~> 1.15'
+gem 'kitchen-ansible', '~> 0.45'
+gem 'serverspec', '~> 2.38'
+gem 'kitchen-verifier-serverspec', '~> 0.6.6'
+gem 'yarjuf', '~> 2.0'
+
+group :ec2 do
+	gem 'kitchen-ec2', '~> 1.2'
+end
+
+group :local do
+	gem 'kitchen-vagrant', '~> 1.0', '>= 1.0.2'
+	gem 'kitchen-docker', '~> 2.6'
+end

@@ -1,0 +1,7 @@
+{% if allow_no_origin|default("true") %}
+"" "no_origin";
+{% endif  %}
+"~^applewebdata:\/\/[a-zA-Z0-9\-_]+$" $http_origin;
+{% for domain in item.cors_domains %}
+"~^(https?:\/\/(.+\.)?{{ domain | regex_escape() }}(:[0-9]+)?)$" $http_origin;
+{% endfor %}

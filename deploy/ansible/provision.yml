@@ -1,0 +1,39 @@
+---
+- name: Roles for all hosts
+  hosts: all
+  become: yes
+  become_user: root
+  gather_facts: yes
+  pre_tasks:
+#    - name: Load stage secret vars
+#      tags: always
+#      include_vars: stage_vars/{{ stage }}_secrets.yml
+    - name: Load stage vars
+      tags: always
+      include_vars: stage_vars/{{ stage }}.yml
+  roles:
+    - { role: common, tags: common }
+    - { role: supla, tags: supla }
+    - { role: nginx, tags: nginx }
+    - { role: php, tags: php }
+
+  vars:
+    - nginx_enable_monitor: true  # default=true, will setup default server responding to /monitor/monitor.html
+    - nginx_package_source: nginx  # default=nginx, options: nginx, openresty
+    - nginx_redirect_to_https: true # default=false, will redirect to https if $http_x_forwarded_proto != "https"
+    - nginx_sites:
+         - name: "{{ product }}"
+           enabled: true
+           type: php
+           redirect_to_https: false
+           server: "{{ web_host }}"
+           listen:
+             - "*:80"
+             - "*:81 http2 proxy_protocol"
+           log_path: /data/logs/{{ product }}
+           root: /data/home/{{ product }}/public
+           socket_type: 'unix:'
+           socket_location: '/usr/local/zend/tmp/php-fpm.sock'
+    - php_version: '7.0' # Don't forget quotes!
+    - php_enable_fpm: true
+

@@ -1,0 +1,16 @@
+{% for site in nginx_sites %}
+{{ site.log_path }}/error_log {{ site.log_path }}/access_log 
+{% endfor %}
+{
+  daily
+  compress
+  rotate 7
+  nocopy
+  nocopytruncate
+  nodelaycompress
+  nosharedscripts
+  dateext
+  missingok
+  notifempty
+  copytruncate
+}

@@ -1,0 +1,102 @@
+---
+# Manage Users and groups from group_vars
+
+- name: Create common-groups
+  group:
+    name={{ item }}
+    state=present
+  with_items:
+    - developers
+    - admins
+
+- name: Create sudoers.d files
+  copy: >
+    src={{ item }}
+    dest=/etc/sudoers.d/{{ item }}
+  with_items:
+    - developers
+    - admins
+
+- name: Combine admins and users, if users defined
+  set_fact:
+    all_users: "{{ users + common_admin_users }}"
+  when: users is defined
+
+- name: Combine admins and users, if users not defined
+  set_fact:
+    all_users: "{{ common_admin_users }}"
+  when: users is not defined
+
+- name: Create users
+  user:
+    name: "{{ item.name }}"
+    shell: "{% if item.shell is defined %}{{ item.shell }}{% else %}/bin/bash{% endif %}"
+    home: "{% if item.home is defined %}{{ item.home }}{% else %}/data/home{% endif %}/{{ item.name }}"
+    comment: "{% if item.comment is defined %}{{ item.comment }}{% else %}Created by terrible{% endif %}"
+    state: "{{ item.state|default('present') }}"
+    groups: "{{ item.groups|default(omit) }}"
+    force: "{{ item.force|default(omit) }}"
+    remove: "{{ item.remove|default(omit) }}"
+  with_items:
+    - "{{ all_users }}"
+
+- name: Set user home dir permissions
+  file:
+    path: "{% if item.home is defined %}{{ item.home }}{% else %}/data/home{% endif %}/{{ item.name }}"
+    mode: "{{ item.mode }}"
+  when: item.mode|default('')
+  with_items:
+    - "{{ all_users }}"
+
+- name: Set user log dir
+  file:
+    path: "/data/logs/{{ item.name }}"
+    mode: 0755
+    state: directory
+    owner: "{{ item.name }}"
+    group: "{{ item.name }}"
+  when: item.create_log_dir|default(false)
+  with_items:
+    - "{{ all_users }}"
+
+- name: Add authorized_keys
+  authorized_key: "user={{ item.0.name }} key={{ item.1 }}"
+  with_subelements:
+    - "{{ all_users | selectattr('ssh_keys', 'defined') | list }}"
+    - ssh_keys
+  when: item.0.state is not defined or item.0.state != "absent" 
+
+- name: Create .ssh dir for accounts requiring private_keys
+  file:
+    path: "/data/home/{{ item.0.name }}/.ssh/"
+    state: "directory"
+    owner: "{{item.0.name}}"
+    group: "{{item.0.name}}"
+    mode: "0700"
+  with_subelements:
+  - "{{ all_users | selectattr('private_keys', 'defined') | list }}"
+  - private_keys
+
+- name: Set private keys for accounts
+  become: yes
+  copy:
+    dest: "/data/home/{{ item.0.name }}/.ssh/{{ item.1.name }}"
+    owner: "{{item.0.name}}"
+    group: "{{item.0.name}}"
+    mode: 0600
+    content: "{{ item.1.value }}"
+  with_subelements:
+    - "{{ all_users | selectattr('private_keys', 'defined') | list }}"
+    - private_keys
+
+#- name: gather terrible-managed existing user accounts
+#  shell: "cat /etc/passwd | grep 'Created by terrible' | cut -d: -f1"
+#  register: terrible_managed_users
+#  changed_when: False
+
+#- name: remove users that are no longer in the userlist
+#  user:
+#    name: "{{ item }}"
+#    state: absent
+#  with_items:
+#    terrible_managed_users.stdout_lines|difference(all_users|map(attribute='name')|list)

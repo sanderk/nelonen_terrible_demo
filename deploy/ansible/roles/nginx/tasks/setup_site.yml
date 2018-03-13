@@ -1,0 +1,86 @@
+---
+- name: Fail for unsupported type
+  fail:
+    msg: "Unsupported nginx site type: {{ item.type }}"
+  when: item.type not in nginx_supported_site_types
+
+- name: Add site config for uwsgi site
+  template:
+    src: nginx_site_uwsgi.conf.j2
+    dest: /etc/nginx/sites-available/{{ item.name }}.conf
+    mode: 0644
+  become: yes
+  when: item.type == 'uwsgi'
+  register: site_config_uwsgi
+
+- name: Write the CORS nginx MAP
+  template:
+    src: cors.map.j2
+    dest: /etc/nginx/cors-whitelist_{{ item.name }}.map
+    mode: 0644
+  become: yes
+  when: item.type == 'uwsgi' and item.cors_domains is defined and item.cors_domains
+  register: site_config_cors
+
+- name: Add site config for php site
+  template:
+    src: nginx_site_php.conf.j2
+    dest: /etc/nginx/sites-available/{{ item.name }}.conf
+    mode: 0644
+  become: yes
+  when: item.type == 'php'
+  register: site_config_php
+
+- name: Create logdir if not exists
+  file:
+    path: "{{ item.log_path }}"
+    state: directory
+
+- name: Add site config for proxy site
+  template:
+    src: nginx_site_proxy.conf.j2
+    dest: /etc/nginx/sites-available/{{ item.name }}.conf
+    mode: 0644
+  become: yes
+  when: item.type == 'proxy'
+  register: site_config_proxy
+
+- name: Add site config for basic site
+  template:
+    src: nginx_site_basic.conf.j2
+    dest: /etc/nginx/sites-available/{{ item.name }}.conf
+    mode: 0644
+  become: yes
+  when: item.type == 'basic'
+  register: site_config_basic
+
+- name: Set symlink for enabled site
+  file:
+    path: /etc/nginx/sites-enabled/{{ item.name }}.conf
+    state: link
+    src: /etc/nginx/sites-available/{{ item.name }}.conf
+  become: yes
+  when: item.enabled
+  register: add_symlink
+
+- name: Remove symlink for disabled site
+  file:
+    path: /etc/nginx/sites-enabled/{{ item.name }}.conf
+    state: absent
+    src: /etc/nginx/sites-available/{{ item.name }}.conf
+  become: yes
+  when: not item.enabled
+  register: remove_symlink
+
+- name: Reload nginx if config changed and site is enabled
+  command: /bin/true
+  when: >
+      (site_config_uwsgi.changed and item.enabled)
+      or (site_config_cors.changed and item.enabled)
+      or (site_config_php.changed and item.enabled)
+      or (site_config_proxy.changed and item.enabled)
+      or (site_config_basic.changed and item.enabled)
+      or add_symlink.changed
+      or remove_symlink.changed
+  notify:
+    - reload nginx

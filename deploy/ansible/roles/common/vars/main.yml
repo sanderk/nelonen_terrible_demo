@@ -1,0 +1,146 @@
+---
+# vars file for common
+common_admin_users:
+  - name: m.lebbink
+    comment: "Marco Lebbink"
+    groups: admins,adm,wheel
+    sudo: true
+    shell: /bin/bash
+    home: /home
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQC8zV/yPajhLjvBV1bmJgZ/NuhJPyLQm3eKqiGgKOYWH4xIz/xoz+5q45XpAWmiZcEKY5+Tj8IHZkALZxWUuwL+CRPoTCQt+i/gaMI+wAzorte7okKMrJiI6xoQg4wTppIA4NebcmBDinIPAAWsdBtdD4q/UaeOsFSPqG5zIijCWOoYLLByi4DW+E8hPDENufx6p35OpAr9e7vUW97du/3cvjZKpIPFhtHlmbKMSAj6NexlQsIA4X2wuoPPvBAQfBAIygQ5l3tLbVahML3m8CzP4NAtrec6LaDM80KoEgIHZp4YXNsuiOJw4J/FxHNx8BiZX1BDqY2mBZ0VOj9P3p9CmWS6LupVjJaLkB9qZA8U2NiHQu43W4aYOtAOd2mdRe0Q4iXRpz1L1j+ZzWCJVlfz8Hf9tu7Bf2M/iiwVVyRAozGvNp2KeWHGk0tUjorKTNRGYB+v3/QGH0q6hbO2bfmuFtVfVSe0MoAUCgmFN7yj7RleI8IzJldgxdbDCaxu72jjb9EkKz9BlmuTKSyiDZc14JFI4ui6tlEohRK/aiT4P+nLBVsQbMtJBc5curtPnJ3cWElTmeQG4hPv86PpflMeP7VxFN/DrYkgdT9GxbvuCr/udLIymV4hDcqPXokwePzv1l1mmhEgH4kD7UxtV/Zg8q6A+U04ydbQzLMklCJSWw== mlebbink@mbpr-mlebbink"
+  - name: r.geevers
+    comment: "Rene Geevers"
+    groups: admins,adm,wheel
+    sudo: true
+    shell: /bin/bash
+    home: /home
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAABJQAAAQEAgF+JTG+Zb09GQWExwxVtUEZ7+6yqD52MeLqM+bGln9KeJxG8egHg4FyDm4TZ+oWeYz8dNS9Odw0Pdf5cUlgM2c5ojcJsWUIMLsjIQzESBtzpaBB2O0Rj+BFqDA+LGFpvhZwnSJpvNUPy5Ef8Z6SoOgbk5PrkRnqOCW8pY/f1O2DR8k/POKkpw2wM3eXi8VYLhpvYMU3Mt3hXIycBjxzzBfRPhdrbf2R9N2FMlfJlBw4g5FXxoqNnVyKwLhNt5+dHJ04jO4+61kKmQbsivalSg5eUzWOOMAr3sk6k8037rM2B0jQLrNS4FnklXOY6MxSXUlI5tjGiYgJ7db3uXfy8ZQ== rene.geevers@sanoma.com"
+  - name: j.swierad
+    comment: "Jaroslaw Swierad"
+    groups: admins,adm,wheel
+    sudo: true
+    shell: /bin/bash
+    home: /home
+    state: absent
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCtz6KJeb960DWnwS48vd9bC5xDis6WcIEUXVIhnXhTryk+FaysxUvGmIQIElui7BLrE7GVFW4vUXKTmQ1nesK0Pe5efj4vIGQwQD7KVf2klkPF8eCz0sxKD+ACWrUd9NB2cslY4/V3CUl74lh0S2F5hPHHRK1KsS7U5SEg/Jh8Mo4D174r6v3PRZxlfRc93i0uJvQWz32uKlYeoNHTpYJHH0vHeRjELCizPCtSDnkzlnqej+vCrqRUKOURk2K29X7rRxlM0MoQk9pJFV7xA4uf8UHPw4tznYwHd5yr1pRGMtPjO5SBi4hHsikPNwp69Zp5YNgmaWPP73ZMtFy+7sb/ j.swierad@messerMBP.local"
+  - name: d.stafylarakis
+    comment: "Dimitris Stafylarakis"
+    groups: admins,adm,wheel
+    sudo: true
+    shell: /bin/bash
+    home: /home
+    state: absent
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC3rKBsHOLiI43ph8T00ySTzDOV0hMWXhrdD7ZYJ5OovA0jAtr867GpZhXcAtyibDINHfocjvB4/aXxGCoaZxT4UQtGurFTYpRJMqKrizLbMbVzAok4UiKgb1SAD1X3+2A1FcRMTcGxSjM7kTTSfBTDngrv3+KJDCna2Sce86jNzxbKygG5KhsflaDNV9wV4uwHBY1cfSyG048JfrTHAuJhZ3gViWakt6Ehbshs7dElrWof6qfJCrjG1gERj57ZM0p/rwHVCV8V13e+Z7B++tJDYSOZvwdTus9iXNJWsSL1IWwfNHkIbThgF+qdi3bEMIrYs4qpocMrbmWoqxnvHOWT dstafylarakis@aws"
+  - name: g.ellis
+    comment: "Grant Ellis"
+    groups: admins,adm,wheel
+    sudo: true
+    shell: /bin/bash
+    home: /home
+    state: absent
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC5veOrBAAqvFGjkBYSxymwYGZ+u/Iz9xmod0zJiagPM7UZDHRrcRPsWrbwlG5aqAMJuGOtShL7c9sMBy7WQh2jG6cIWSou+f7ohSllmdUNxqsDHT4b2hx9slqP3idLPugjPzB2/yrpKR+zdSillF32tGjp3BGWN6wgC7LfuWGqSxdlHCv+fBRAK5eQi7ohZ0YgwzEMKFLpl1puPJdGBePoLzgr+32VvvJ4EBzoNMf1cVjjzCjzCmKTRrJKhaKJfhIysgiJbPnikP83POa2INQXpRyyv3+wJ2D5YIsbx9OYDDwPn9tVkNaRoZVNoK8Wzc9KY3jEqzmw68jBnrBi+zQt"
+  - name: s.tintel
+    comment: "Stijn Tintel"
+    groups: admins,adm,wheel
+    sudo: true
+    shell: /bin/bash
+    home: /home
+    state: absent
+    ssh_keys:
+      - "ecdsa-sha2-nistp521 AAAAE2VjZHNhLXNoYTItbmlzdHA1MjEAAAAIbmlzdHA1MjEAAACFBAGxNOo8bgL+cDDuOd+bJQMhVvRmW/HxlXa25+eFWkWrIcwAGGmKqvveN7knAMdcvWWqPYkb/b5uwSbLzgLzf6sqwQA/Vhhlx/kqL+k6FQbAyBO4XkI5rZrEXOrK1/RHD6qQolhfxriQSQQoJ4ECXFGtzFsMlr4Y9gRRpT1pE9163PV1xA== stijn.tintel@sanoma.com"
+  - name: s.vandervliet
+    comment: "Sebastiaan van der Vliet"
+    groups: admins,adm,wheel
+    sudo: true
+    shell: /bin/bash
+    home: /home
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC7I+BiHUXPrdFyvzF4YLldZ3nM30S8e4BcJhSg2qNwGWR1QV6pA7MZ3G43flFMLBjAoDTWa9ep3zEvf/dydixOxJAjU95cXG4OKBRR7FRIDOFQThd6K5Wu2xXf019GTaDRFjs/0K4l6Ce/ZahkDK77WeW0hKA1nKrxPFj24o5qPDm5AXvB0VYiNzh/4XOI3i+SPHi4B4SYZpXQk5d//JLTg+cUxXt1o9ahJRYTtYKgP9QCDRYhlVYl+CzCunvHsZhdmW0NeAYZSHluCU7GDGgkoDVpEDF2hDInXh4kSKiOl3xctlLCPwwJhyahla0VhQTxb6gEskuRXANhfW9jwPnt sebastiaan.vandervliet@sanoma.com"
+  - name: r.deknijf
+    comment: "Rutger de Knijf"
+    groups: admins,adm,wheel
+    sudo: true
+    shell: /bin/bash
+    home: /home
+    state: absent
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAAEAQCjaDdE+2O9eN2VNI6no2EurflIO6Mub6x3Egp+P6N3kxI+N5odJfLfiYD09OUirMTRR7KYJv8avHMR6APAch6QG6ke9wOzz+v9Mwe0jtEJ6DakUsLq5v+8dIVqG5nJ7bw2v7u6ZAek+SV193WkbF0URdzTohymHNDAAtBYCNMhOwJ66dlddpeV+22TUzIeApMgz6RRw6sIYIVPFrV6YCEfxbPq9xeZ8m584D7Rl5njA5rRXuhvc/cWHfMhD4DnXCNnCNzhqKPndQekfuiVRvd5QLt6H2hpGKRQ3l522iYW/yaIhMEDVlLaDbJKzpTVJEfhVtrBjeJwGY5cop/9cYGzT/z36vTmZURVqqVNUY0y05M6Qo2+4vMlCEh7USuy0UGH+PEBBT9WRrEiJm89h6m5L6SK38h8t2x1hfeIozLlobf9+lJhd/CG4NVbIUJyG1SJZ77N2mc0r8ZJIhg5jTDOzKckY9qiE8ZIjdZvCY8DbvdZzcNQZIx/8BforHf4YX1jSl4pebLxBy9qnH3UuFhViR3puvx2rVycLkml1rCNmYnGxY9vbFaEvhiK0tQAv7iMs5VcNGXEc/VPnJV3eYCFxLOD9069cmSo2C9/unGipid7tXwfzO3Y190zKKl8GFjfPEEC/tHQ685ZQtR4j1UuV6WrYf4upNfQ5JSa1OlVelYZSeHhHXfgwSfeTRH+0/ceu0smYNmDawjBJyN0hpEGmOh2HHc7VzyfDOVBRY7Hi4hf693ogoxGj9pBkE5DnMkZ3sLTFCMTebJ6WDCkPtH74GFN5MoyNDNAba9WMWLChCuwiTlxdUekHV4zfvmSLsU/WYPLLGb7461jN7fDUvObVLSKDCl+SSddK/fJkJwy7wu/dKp1q7Tc1DrP4+4y7j0OXmjjuZOr2hqO1USUXTnoRYnTdWmaP/vnzK4uUta+o4R45DPg2A0N8E23O6AfYe95P3qaJWnOukLYtUeKxdZwdIPdRdrdF9wvVzF+h7//ZFuneRk4wXC58HGfmyB45EdevzQOCpVM41mZVvCfU5627x0e0Wq97gzVewgaiRpJMFkbuNeh/KYG6BeCCP2TOIY9R3Fzt32cs/uH3gm8yxypyhmkXbgxRp2aExDyO60HTFfwbMr9susyJgO/wCQHanp1skyBwsVzAnANrDuJNJ7sNVGYgYWvaecBSNRXAYoqOKmOfi4QJkqJRchf0v3P08rxBDUzFFWafhMYtNPYsOqbGR1lM8nZjUH+dxfvdLfDlP2yBPui+AGT1XAKnNJbkp4JpBtOv+AdO8PUnyfW0TVkAWUYZXfIWXvk25oNftYIeZ0JFv9slOZRWoGMazW93zDzvx+uHdYfQZhn3AqkDR+D rdeknijf_wyrm"
+  - name: a.liepins
+    comment: "Arturs Liepins"
+    groups: admins,adm,wheel
+    sudo: true
+    shell: /bin/bash
+    home: /home
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDSkuafHgsyH5yNTxQOAhQTIdOhT7DqICQZKYutV+e1Hp+jYHlbdXkjUqiLP36svGLSkJ3ME0qm01muyBdTtJ+EaPxJoGT3so5+Y8iHlw+776erNS3sQlzqhaOBM5RqFv+FuSsfdHWIfL0Ez2q9MxBeMMHD3LX3T2rp49yB4Rg7tZr3T/ni6AZQsCGGK1mB+4On4HCWYp5FnC8oSsXIxG4sdG9HCgobqAOtwRmL+j77l0qQ+OUyK+/5dXluiX8z/Q3INYdqm4clVk7F30zdnzRvWvD0xHUxzuFPqEFjtvI9irtOBzyo/jepiaXkUOLQD50NExC/yBMbf9jk1s8HpM9m2yLETmrWTXGuMmitcPYU1igo7PCh4/3A09qHdqwWT3qXW9UQ7H1G21jU+uyu4sn8tHrboNZ/mUMNpXxue0ajUEGMltuQj7dgCGNbtWbNzosjcnAX977HL/K8rKwLMqEr9fdFbYn2jT+2br7kPhBQMLQ12GUDAQHyKKp9wjq/0zEitOnkIoBn7RkXM00c1F184oX9OxmDOsjUT6yDg8QycbLEx1lQJVwQVgtMvHLgx07dgjdCRYvr7W/8HvxJPMfKUp09FFDktE0D7JobhH7JkNP9Wu7MlMQXfo0xg6o1h57m7Fauun9HaCikguVvLXRddV9fuhM3wXEA8X3EDyE7Ew=="
+  - name: k.gutans
+    comment: "Kristaps Gutans"
+    groups: admins,adm,wheel
+    sudo: true
+    shell: /bin/bash
+    home: /home
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDLUaIXAMsaUrEzZ1Mq4atEyx67v25CNpb0b/hJgAR1gtlIjGdYdXs6kh2fToVSNweGYbZZzPEGebQvG6vDRExQSOqpGpvy3oky3ilnxLKXBp0Bm+GLMx7EMG2304IHqz78HG/0iGazri5ZXHrstnwI0H7gTKi8kDRSuBsbHqVP1DMe0LSd6FzqXzQfRoo/gKC1t1jcE4wTWV8iXch0jqFuu/A3JqShcOEnl52V3msk4vT/1ohD9UqkHQI4LQkBMaRvik8yEz5gDQmXMIdc8DVjxwNcx9GjAeZeuGUMmBCM6XvaTKd2htSLKS5/E/Fywti6aHQ1R7/QURuSV08gANPzsqULjq1hvFKUqTtGdwDWTYdR2TEtr87gHQPdEdgRp1AxrQ9lMonGyrgzqhLpmOtr6hV8nR0HLWtz1zKBblHiIujSTT7z0jaX++6T+H5el7/WyO+3qTo0tds2pcLPFT59cp0RZrA1fqcaql5TI6zVTaJCTNbgyyIlaLnPD5L2euu0jeE3Xy5j0epdGfl8PrmRdlXsL2MKTMixQJyk+vwPFWxMhUsiEJGiVEb8j/M5nEvp+87C+/KUoXoVKWfex8QiLUV7UPFirxvhA2/6SF6qupEZ6vmNS1ZPuo5MkXbmQCuSwIXOSfLWErhnZzwGV7xDPWNJ+0WhtRXyLBCIyzC91w=="
+  - name: g.riemer
+    comment: "Geert-Johan Riemer"
+    groups: admins,adm,wheel
+    sudo: true
+    shell: /bin/bash
+    home: /home
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDW7+L5mNX6/Brfu0mkJ05BNHQHreB82Ger9FzA2VHoDXJL5s11n2FAeGrRKd57oqWZ+EufIcK4b0gsOe14bai7mkpll1tZ9PfW/F6GkUQPd/qAtu6naWMqUKU2FtBiLsNZ08KG5Nklu1JiZR3gw+J05ImIqP/3mP/RZlXGq98Mr+hJwPuhicux0etr5CFMt33vfy0vupU8e50iuzMOHTZzu3SwFx1euvqCZvx0gi/WXDVM1J5xOtNngmnlbs8m9FxEkzjZA+/CmoCqSHmEHZ8bujX6jmcYvjm+KmkdtJEXQwr4R46z0h5Y21EXzpnn6a2hod6CnVymWBM0/V5SaHbi1sEmFHrlUmXPwVwSyUE09XAGAgDyORzGwej7JjqBxQ45P8meLUu1biC50eSolZGca2a7bmAiBIRqwAK8+tBlUtiH/8RKqcvE+sGm2JhP5Rx/TByMPUIaNBgsnAuf5DfaKd2Dqx46j665UxMZJCG1DZrVCEGRdYZI34a7OIJzULqvzkI09BkSnibraDno9LCLE/vcxHPH8dD8atqwRzOLcxbGcyw73PF2AkOJc6NHHjglG8xaQ0qLTQXLZKBzFgJp/cRQ0c6tScvneUYQOstdu1W8BiSypSrsnZOegQmzeK8hn/6H0kNcHT7mxXXHa8buoEe2MKxwis6V3xG/Z0ghOQ== geertjohan sanoma"
+  - name: p.vanempelen
+    comment: "Paul van Empelen"
+    groups: admins,adm,wheel
+    sudo: true
+    shell: /bin/bash
+    home: /home
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAACAQDRBt8Uo2ZuRzZWD+N8clhX7ERwgtEl2c6bGt739ehqJvIRXU2ozSBO+1yvgeiODKENQtGt5ODm1NR7DR0BS6NTr0ah5YohIabcpsBYvGkW2Wtkn5p/xOB4n44dYnrRDljuEgdOAnIZ5fGvDihI4OAjtkoGzdz5p94n9MDy4wVLL0QW58wASriy64UTwBqOFvlVcD0dBOLj0+QBx6+DewQdIMbRjeiHqahLw867ZxcuiJJSk63uQyyscfuahTSCSy6FuxmmSwqX5E1fe3NI/LSjj18AdOQc/zVyTL2xPkMMtfXZDpNjQhxNOaO0whV+lLAdWX2anlO44Bwv3RG3gP0tzOVmd7wI+2PqShwpTGGHI+R2QMxscptqImCG24FaqqfzdLCMxNIDh5vgZZu8WBdm+xKm5meKNtQB0ZjZVYZFeAT1hVASJbXmWc542OSt7ZFbzQl0Y9z3+V1qryOchIvRZvby7fUMW9V9OxaSeNPRv7PjooPtUj2Kp1v3S/UMsnNUVsgzfN+hNlQKcsTwvnX13N6+i9XGkmJ7xuMAcSYh8nVAd4wedA3+zCL7EQNeaPB1iuGcwiLlpzfLCq8XiDEkGZ1qIbJAkuN3iTDm5JgE8V+sV+4RP8Af1xd0dd/aSV0yDfQHQPrrSFawQK+ceIZxuUEpIRsgZdyX0YaLcpR+0Q== paul@mbp-work"
+
+
+
+common_upstream_nameserver: 10.164.0.2
+
+
+common_dnsmasq_config:
+  "aws.sanomacloud.net":
+    - 10.165.64.252
+    - 10.165.65.252
+    - 10.165.66.252
+  "aws.sanomahost.fi":
+    - 10.165.64.252
+    - 10.165.65.252
+    - 10.165.66.252
+  "media.corporatead.net":
+    - 10.236.128.20
+    - 10.236.128.21
+    - 10.236.252.20
+    - 10.236.252.21
+  "sanoma.fi":
+    - 10.236.128.20
+    - 10.236.128.21
+    - 10.236.252.20
+    - 10.236.252.21
+  "int.sanomahost.fi":
+    - 10.236.128.20
+    - 10.236.128.21
+    - 10.236.252.20
+    - 10.236.252.21
+  "sanoma.nl":
+    - 10.236.128.20
+    - 10.236.128.21
+    - 10.236.252.20
+    - 10.236.252.21
+
+common_search_domains:
+  - "{{ product }}.{{ deployment }}.{{ cluster }}.aws.sanomahost.nl"
+  - "service.consul"
+
+common_smarthost: "smarthost.aws.sanomahost.nl"
+monitor_host: "checkmk.aws.sanomahost.nl"

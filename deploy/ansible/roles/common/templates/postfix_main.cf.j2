@@ -1,0 +1,11 @@
+# Config for postfix on instances, it is intended to be simple, only add a 
+# relayhost, rest should be as much as possible default
+#
+# See postconf -d for all default settings
+
+
+myhostname = {{ ansible_fqdn }}
+
+relayhost = {{ common_smarthost }}
+inet_protocols = all
+inet_interfaces = localhost

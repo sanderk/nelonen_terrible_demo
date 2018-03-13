@@ -1,0 +1,11 @@
+{% if nginx_cache_paths is defined %}
+  {% for cache in nginx_cache_paths %}
+  {{ cache.type }}_cache_path {{ nginx_cache_root }}/{{ cache.key_zone }}
+    levels={{ cache.levels }}
+    keys_zone={{ cache.key_zone }}:{{cache.size}}
+    max_size={{ cache.max_size }}
+    inactive={{ cache.inactive }}
+    use_temp_path={{ cache.use_temp_path|default('off') }}
+    {{ cache.raw|default('') }};
+  {% endfor %}
+{% endif %}

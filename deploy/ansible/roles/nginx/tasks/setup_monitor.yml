@@ -1,0 +1,33 @@
+---
+- name: Add monitor default server config
+  template:
+    src: nginx_site_monitor.conf.j2
+    dest: /etc/nginx/sites-available/monitor.conf
+    mode: 0644
+  become: yes
+  register: monitor_config
+
+- name: Set symlink for monitor
+  file:
+    path: /etc/nginx/sites-enabled/monitor.conf
+    state: link
+    src: /etc/nginx/sites-available/monitor.conf
+  become: yes
+  when: nginx_enable_monitor
+  register: add_symlink
+
+- name: Remove symlink for monitor
+  file:
+    path: /etc/nginx/sites-enabled/monitor.conf
+    state: absent
+    src: /etc/nginx/sites-available/monitor.conf
+  become: yes
+  when: not nginx_enable_monitor
+  register: remove_symlink
+
+- name: Reload nginx if monitor config changed
+  command: /bin/true
+  when: (monitor_config.changed and nginx_enable_monitor) or add_symlink.changed or remove_symlink.changed
+  notify:
+    - reload nginx
+

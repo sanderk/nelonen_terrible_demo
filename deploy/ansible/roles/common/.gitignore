@@ -1,0 +1,4 @@
+test_kitchen/.bundle/
+test_kitchen/.kitchen/
+test_kitchen/.vendor/
+test_kitchen/.kitchen.local.yml

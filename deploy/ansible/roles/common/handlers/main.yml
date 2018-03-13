@@ -1,0 +1,14 @@
+---
+# handlers file for monitor
+#
+- name: restart xinetd
+  action: service name=xinetd state=restarted enabled=yes
+
+- name: reload systemd
+  command: systemctl daemon-reload
+
+- name: restart postfix
+  service: name=postfix state=restarted
+
+- name: restart dnsmasq
+  service: name=dnsmasq state=restarted enabled=yes

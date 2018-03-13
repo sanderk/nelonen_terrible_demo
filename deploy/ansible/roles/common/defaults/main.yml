@@ -1,0 +1,28 @@
+---
+# defaults file for common
+#
+nameservers:
+  "eu-west-1a":
+    - 10.164.176.252
+    - 10.164.136.252
+    - 10.164.96.252
+  "eu-west-1b":
+    - 10.164.136.252
+    - 10.164.176.252
+    - 10.164.96.252
+  "eu-west-1c":
+    - 10.164.96.252
+    - 10.164.176.252
+    - 10.164.136.252
+
+common_monitor_stages:
+  - production
+  - staging
+  - test
+
+common_use_dnsmasq: false
+
+common_manage_postfix: true
+
+# set to false to disable ec2 facts for Vagrant
+common_gather_ec2_facts: true

@@ -1,0 +1,112 @@
+- name: Set Zend version for PHP 7
+  set_fact:
+    zend_version: '9.0/rpm_apache2.4'
+  when:
+    - php_version | version_compare('7.0', '>=')
+    - zend_version is not defined
+
+- name: Set Zend version for PHP 5 (CentOS 7)
+  set_fact:
+    zend_version: '8.0/rpm_apache2.4'
+  when:
+    - php_version | version_compare('7.0', '<')
+    - ansible_distribution_major_version == "7"
+    - zend_version is not defined
+
+- name: Set Zend version for PHP 5 (CentOS 6)
+  set_fact:
+    zend_version: '7.0/rpm'
+  when:
+    - php_version | version_compare('7.0', '<')
+    - ansible_distribution_major_version == "6"
+    - zend_version is not defined
+
+- name: Add Zend repo
+  yum_repository:
+    name: zend-server
+    description: Zend Server
+    baseurl: "http://repos.zend.com/zend-server/{{ zend_version }}/$basearch"
+    gpgcheck: yes
+    gpgkey: http://repos.zend.com/zend.key
+
+- name: Add Zend noarch repo
+  yum_repository:
+    name: zend-server-noarch
+    description: Zend Server - noarch
+    baseurl: "http://repos.zend.com/zend-server/{{ zend_version }}/noarch"
+    gpgcheck: yes
+    gpgkey: http://repos.zend.com/zend.key
+
+- name: Install Zend PHP
+  yum:
+    pkg: "{{ item }}"
+    state: present
+  with_items:
+    - php-{{ php_version }}-bin-zend-server
+    - zend-server-php-{{ php_version }}-common
+
+- name: Install Zend PHP modules
+  yum:
+    pkg: "php-{{php_version}}-{{item}}-zend-server"
+    state: present
+  with_items: "{{php_modules}}"
+
+- name: Create Directories
+  file:
+    dest: "{{ item }}"
+    state: directory
+  with_items:
+    - /usr/local/zend/etc
+    - /usr/local/zend/etc/conf.d
+    - /usr/local/zend/var
+    - /usr/local/zend/var/log
+    - /usr/local/zend/tmp
+
+- name: Set Up Symlinks
+  file:
+    dest: "{{ item.dest }}"
+    state: link
+    src: "{{ item.src }}"
+  with_items:
+    - dest: '/etc/php.d'
+      src: '/usr/local/zend/etc/conf.d'
+    - dest: /usr/local/bin/php
+      src: '/usr/local/zend/bin/php'
+    - dest: /usr/local/bin/php-cli
+      src: '/usr/local/zend/bin/php'
+
+- name: Create zend.ini
+  copy:
+    dest: /usr/local/zend/etc/conf.d/zend.ini
+    content: 'extension_dir = /usr/local/zend/lib/php_extensions'
+
+- name: Create php.ini
+  template:
+    src: php.ini.j2
+    dest: /usr/local/zend/etc/php.ini
+    owner: root
+    group: zend
+    mode: '0664'
+  when: php_manage_ini
+
+- name: Symlink Zend Apache module
+  file:
+    dest: '/etc/httpd/modules/libphp5.so'
+    src: '/usr/local/zend/lib/apache2/libphp5.so'
+    state: link
+  when: php_enable_modphp
+
+- name: Install Zend Apache module
+  yum:
+    pkg: mod-php-{{php_version}}-apache2-zend-server
+    state: present
+  when: php_enable_modphp
+
+- include: zend_fpm.yml
+  when: php_enable_fpm
+
+- name: Configure Zend Server service
+  service:
+    name: zend-server
+    state: "{{ php_enable_zend_server | ternary('started','stopped') }}"
+    enabled: "{{ php_enable_zend_server }}"

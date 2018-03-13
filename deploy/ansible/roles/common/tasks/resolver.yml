@@ -1,0 +1,6 @@
+---
+- name: Set correct resolv.conf
+  template:
+    src: resolv.conf.j2
+    dest: /etc/resolv.conf
+  when: ansible_ec2_placement_availability_zone is defined

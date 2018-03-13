@@ -1,0 +1,15 @@
+{# TODO: Move more parts of site config to fragments and reuse in all types (uwsgi, proxy, php) #}
+{% if item.listen is defined %}
+    {% if item.listen is iterable and item.listen is not string %}
+        {# listeners defined as list #}
+        {% for l in item.listen %}
+  listen {{ l }};
+        {% endfor %}
+    {% else %}
+        {# single listener defined #}
+  listen {{ item.listen }};
+    {% endif %}
+{% else %}
+    {# fallback to default #}
+  listen *:80;
+{% endif %}

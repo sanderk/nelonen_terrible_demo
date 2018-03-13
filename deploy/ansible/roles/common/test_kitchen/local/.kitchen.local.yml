@@ -1,0 +1,50 @@
+---
+driver:
+  name: vagrant
+
+provisioner:
+  name: ansible_playbook
+  hosts: all
+  roles_path: ../../common
+  ansible_version: 2.2.1
+  require_pip: true
+  require_ansible_repo: true
+  ansible_verbose: true
+  require_chef_for_busser: false
+  enable_yum_epel: true
+
+platforms:
+  - name: c72-latest
+    driver:
+      box: centos72-latest
+      box_url: https://snm-nl-hostingsupport-test.s3.amazonaws.com/vagrant/centos72-latest.box
+      box_check_update: true
+      customize:
+        memory: 1024
+      network:
+        - ["private_network", {ip: "192.168.201.6"}]
+      vm_hostname: common.local
+      provision:
+        - sed -i '/tsflags=nodocs/d' /etc/yum.conf
+        - yum install ruby rubygems openssl -y
+
+verifier:
+  name: serverspec
+  default_pattern: true
+  gemfile: spec/Gemfile
+  test_serverspec_installed: false
+  additional_serverspec_command: cp -f /tmp/verifier/suites/serverspec/* /tmp/verifier/serverspec/
+
+suites:
+  - name: development
+    provisioner:
+      additional_copy_path: extra_vars_development.yml
+      ansible_extra_flags: "--extra-vars @/tmp/kitchen/extra_vars_development.yml"
+  - name: resolver
+    provisioner:
+      additional_copy_path: extra_vars_resolver.yml
+      ansible_extra_flags: "--extra-vars @/tmp/kitchen/extra_vars_resolver.yml"
+  - name: dnsmasq
+    provisioner:
+      additional_copy_path: extra_vars_dnsmasq.yml
+      ansible_extra_flags: "--extra-vars @/tmp/kitchen/extra_vars_dnsmasq.yml"

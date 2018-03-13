@@ -1,0 +1,13 @@
+# 'test' stage vars
+---
+
+supla_private_ssh_key: |
+  {{vault_supla_ssh_key}}
+
+supla_public_ssh_key: |
+  ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQCv/pwdplXe9s3ddP5+m59H04w5M3SDgQ1du8K
+  Zb1U5td89qRnexhHF+T5bOMiYtmLS8VjEJUfgBfUJmdYFdWPamwXUkxkN985lfJcBU6I0LSu92e
+  BkMsfnCrrHGA/iyQIwp4UgrcbIKEv3U70O3vx/BZfuf5z9mZ/KPng1GSWWcS49NNeKJ/FbWMLc6
+  V2ldKZumccv26e9Daj8z3NKEsP3OPa+jeRxPMhSWlC1Syf8nfuxB91jwfHKiYK2n1zfNSghc5Lr
+  iBH7OXw5n5gIFGBdpiWwazbR8zgac0FpA08qoVUkNfpy+9+rmtQHWQa7ZU+HVeRpLqObkaIjDXb
+  dKk+R supla

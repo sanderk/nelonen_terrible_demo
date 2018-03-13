@@ -1,0 +1,50 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "false"
+server {
+{% include "nginx_site.fragment.listen.j2" with context %}
+
+  server_name {{ item.server }};
+
+  client_max_body_size {{ item.client_max_body_size | default("10m") }};
+  add_header X-Id {{ ansible_hostname }};
+
+  access_log {{ item.log_path }}/access_log combined_microseconds ;
+  error_log {{ item.log_path }}/error_log;
+  root {{ item.root }}; 
+
+  index {{ item.index | default("index.php index.html") }};
+
+  location ~ \.php(/|$) {
+    include       /etc/nginx/fastcgi_params;
+    try_files     $uri $uri/ /index.php?$args;
+
+    fastcgi_pass  {{ item.socket_type }}{{ item.socket_location}};
+    fastcgi_split_path_info ^(.+\.php)(/.*)$;
+    fastcgi_param SCRIPT_FILENAME $document_root$fastcgi_script_name;
+  }
+
+  location / {
+    try_files $uri $uri/ /index.php?$args;
+  }
+
+  {% if item.locations is defined %}
+    {% for l in item.locations %}
+      location {{ l.match }} {
+	{% if l.alias is defined %}    
+          alias {{ l.alias }};
+        {% endif %}
+        {% if l.deny is defined %}
+          deny {{ l.deny }};
+        {% endif %}
+        {% if l.root is defined %}
+          root {{ l.root }};
+        {% endif %}
+        {% if l.try_files is defined %}
+          try_files {{ l.try_files }};
+        {% endif %}
+        {% if l.expires is defined %}
+          expires {{ l.expires }};
+        {% endif %}
+      }
+    {% endfor %}  
+  {% endif %}
+}

@@ -1,0 +1,6 @@
+---
+nginx_supported_site_types:
+- uwsgi
+- php
+- proxy
+- basic

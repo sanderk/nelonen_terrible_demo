@@ -1,0 +1,29 @@
+#jinja2: trim_blocks: "true", lstrip_blocks: "false"
+server {
+{% include "nginx_site.fragment.listen.j2" with context %}
+
+    server_name {{ item.server }};
+
+    {% if item.auth_basic is defined %}
+    auth_basic "{{ item.auth_basic.title }};"
+    auth_basic_user_file {{ item.auth_basic.userfile }}
+    {% endif %}
+
+    {% if item.log_path is defined %}
+    access_log {{ item.log_path }}/access_log combined_microseconds ;
+    error_log {{ item.log_path }}/error_log;
+    {% endif %}
+  
+    location / {
+        proxy_pass {{item.proxy_pass_protocol| default('http')}}://{{ item.proxy_pass_host| default('localhost') }}:{{ item.proxy_pass_port }}{{ item.proxy_pass_path|default(omit) }};
+        proxy_http_version {{ item.http_version| default('1.1') }};
+
+        {% for header in item.proxy_headers %}
+          proxy_set_header {{ header.name }} {{ header.value }};
+        {% endfor %}
+        
+        {% for extra_location_params in item.extra_location_params %}
+          {{ extra_location_params.name }} {{ extra_location_params.value }};
+        {% endfor %}
+    }
+}

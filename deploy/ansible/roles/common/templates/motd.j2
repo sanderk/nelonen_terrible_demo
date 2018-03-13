@@ -1,0 +1,40 @@
+{# https://github.com/ansible/ansible-examples/pull/118/files #}
+{% set ipv4_addr='UNKNOWN' %}
+{% if ansible_eth0 is defined %}{% set ipv4_addr = ansible_eth0.ipv4.address %}
+{% elif ansible_default_ipv4 is defined %}{% set ipv4_addr = ansible_default_ipv4.address %}{% endif %}
+################################################################################
+# This machine is managed by Terrible.
+#
+# Host          : {{ ansible_hostname }}
+# IP address    : {{ ipv4_addr }} {% if ansible_ec2_placement_availability_zone is defined %}
+(AZ: {{ ansible_ec2_placement_availability_zone }}){% endif %}
+
+# Environment   : {{ stage }}
+# Cluster       : {{ cluster }}
+# Product       : {{ product }}
+# Role          : {{ role }}
+#
+# OS            : {{ ansible_distribution }} {{ ansible_distribution_version }} {% if ansible_ec2_ami_id is defined %}
+(from: {{ ansible_ec2_ami_id }}){% endif %}
+
+{% if ansible_ec2_instance_type is defined %}# Instance Type : {{ ansible_ec2_instance_type }}
+{% endif %}
+# vCPU          : {{ ansible_processor_vcpus }}
+# Memory        : {{ ansible_memtotal_mb }} Mb
+# Disksize      : {% if ansible_devices.xvda is defined -%}{{ ansible_devices.xvda.size }}{% elif ansible_devices.nvme0n1 is defined -%}{{ ansible_devices.nvme0n1.size }}{% else -%}{{ ansible_devices.sda.size }}{% endif %}
+
+#
+{% if not stage == 'development' %}
+# All assets in this product:
+# {% for host in groups['all'] -%}
+{% if hostvars[host]['ansible_os_family'] == 'Windows' -%}
+  - {{ hostvars[host]['ansible_hostname'] }} ({{ hostvars[host]['ansible_ip_addresses']|first}}) (Windows)
+{% elif 'ansible_default_ipv4' in hostvars[host] -%}
+  - {{ hostvars[host]['ansible_hostname'] }} ({{ hostvars[host]['ansible_default_ipv4']['address'] }})
+{% endif -%}
+# {% endfor %}
+{% else %}
+# Asset discovery disabled for development
+{% endif %}
+
+################################################################################

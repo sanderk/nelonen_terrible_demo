@@ -1,0 +1,12 @@
+---
+- name: stop serf service
+  service:
+    name: serf
+    state: stopped
+    enabled: no
+  ignore_errors: true
+  when: stage != 'development'
+- name: remove configuration files
+  file:
+    path: /etc/serf
+    state: absent

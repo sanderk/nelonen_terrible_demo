@@ -1,0 +1,12 @@
+# 'all' group vars
+---
+product: "supla"
+db_root_password: "{{ rds_db_password }}"
+db_host: "{{ rds_db_host }}"
+db_endpoint: "{{ rds_db_endpoint }}"
+db_name: "{{ rds_db_name }}"
+db_username: "{{ rds_db_username }}"
+db_password: "{{ rds_db_password }}"
+db_port: "{{ rds_db_port }}"
+web_host: "{{ loadbalancer_fqdn }}"
+

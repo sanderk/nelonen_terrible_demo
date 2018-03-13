@@ -1,0 +1,6 @@
+# 'vagrant' playbook
+---
+
+- import_playbook: provision.yml
+  tags: [provision]
+

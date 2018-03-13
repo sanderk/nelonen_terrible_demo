@@ -1,0 +1,23 @@
+# Systemd service definition for Nginx Openresty, based on systemd script as
+# would be installed by official Nginx (http://nginx.org/packages/centos/7/)
+#
+# Effectively overrides the init.d openresty script, by adding openresty alias,
+# meaning the nginx service can be used for both official nginx and openresty.
+# Any call to openresty service will redirect to the nginx service.
+[Unit]
+Description=nginx (openresty variant) - high performance web server
+Documentation=http://nginx.org/en/docs/ http://openresty.org/en/
+After=network.target remote-fs.target nss-lookup.target
+
+[Service]
+Type=forking
+PIDFile=/run/nginx.pid
+ExecStartPre=/usr/local/openresty/nginx/sbin/nginx -t -c /etc/nginx/nginx.conf
+ExecStart=/usr/local/openresty/nginx/sbin/nginx -c /etc/nginx/nginx.conf
+ExecReload=/bin/kill -s HUP $MAINPID
+ExecStop=/bin/kill -s QUIT $MAINPID
+PrivateTmp=true
+
+[Install]
+Alias=openresty.service
+WantedBy=multi-user.target
