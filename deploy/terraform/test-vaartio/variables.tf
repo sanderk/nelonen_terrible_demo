@@ -59,15 +59,15 @@ variable "lb_certificate_domain" {
 #### RDS ######################################################################
 
 variable "engine" {
-  default = "postgres"
+  default = "mariadb"
 }
 
 variable "engine_version" {
-  default = "9.6.2"
+  default = "10.2.11"
 }
 
 variable "port" {
-  default = "5432"
+  default = "3306"
 }
 
 variable "instance_class" {
