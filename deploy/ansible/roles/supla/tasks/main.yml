@@ -33,11 +33,11 @@
 
 - name: download artifact
   s3:
-    aws_access_key: "{{ s3_access_key }}"
-    aws_secret_key: "{{ s3_secret_key }}"
-    bucket: "snm-nl-nelo-novelist-test-va-webbucket-25433c0e"
-    object: "/novelist.tar.gz"
-    dest: "/data/home/{{ product }}/novelist.tar.gz"
+    aws_access_key: {{ s3_access_key }}
+    aws_secret_key: {{ s3_secret_key }}
+    bucket: snm-nl-nelo-novelist-test-va-webbucket-25433c0e
+    object: /novelist.tar.gz
+    dest: /data/home/{{ product }}/novelist.tar.gz
     mode: get
     region: eu-west-1
     retries: 2
