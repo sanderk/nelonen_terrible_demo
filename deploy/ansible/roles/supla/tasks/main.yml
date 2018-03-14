@@ -34,7 +34,6 @@
 - name: download artifact
   aws_s3:
     ignore_nonexistent_bucket: true
-    profile: osc-nelonen-test
     aws_access_key: "{{ s3_access_key }}"
     aws_secret_key: "{{ s3_secret_key }}"
     bucket: "snm-nl-nelo-novelist-test-va-webbucket-25433c0e"
@@ -46,7 +45,7 @@
 
 - name: Extract novelist.tar.tgz
   unarchive:
-    src: novelist.tar.tgz
+    src: /data/home/{{ product }}/novelist.tar.gz
     dest: /data/home/{{ product }}/public
 
 
