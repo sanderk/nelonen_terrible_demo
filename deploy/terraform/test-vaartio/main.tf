@@ -95,7 +95,7 @@ module "log_bucket" {
 module "web_bucket" {
   source          = "git::ssh://git@source.sanoma.com:7999/tfmod/s3_bucket_with_logging.git?ref=0.0.3"
   name            = "webbucket"
-  acl             = "private"
+  acl             = "bucket-owner-full-control"
   tags            = "${var.tags}"
   logging_bucket  = "${module.log_bucket.id}"
   logging_prefix  = "/log"
