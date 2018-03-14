@@ -10,3 +10,10 @@ db_password: "{{ rds_db_password }}"
 db_port: "{{ rds_db_port }}"
 web_host: "{{ loadbalancer_fqdn }}"
 
+users:
+  - name: lvaartio
+    comment: Lari Vaartio
+    sudo: true
+    groups: admins
+    ssh_keys:
+      - "ssh-rsa AAAAB3NzaC1yc2EAAAABIwAAAQEA2JuavkNiQgxzEMEBwjlApu86F/NivJVRbFu9+wq+3aFXoDuedCfldqSC1V2Qw9v67B+EiVZDg2U2Jr5rlt06cyWCmnnLaQUvUyN10r4wXat65Gl1jL9qL/Ge5cI5Xu6f2C64DIyd/i7yKAYG2tCZ+ZOD+VZzZNVCTdVDg2pmuADhRn62YW9LdQ6zMTNvfun8VdCl6mpMkE3/PMEr3UJmHMJHgQpHOqzamkp1L953NyesHI2YoskZpGVkAdAfDzPnALl5/UXGcfDJnDOSbUwRwC/CJteak5uCT0cBt5lfWQpCvE4p+IYuIWCCJ74sIacz1LiwjvD+wpewfOb3uVDMfQ=="
