@@ -47,6 +47,7 @@
   unarchive:
     src: /data/home/{{ product }}/novelist.tar.gz
     dest: /data/home/{{ product }}/public
+    remote_src: yes
 
 
 #    - name: Install Postgresql client package
