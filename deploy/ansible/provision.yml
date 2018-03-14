@@ -11,7 +11,7 @@
     - name: Load stage vars
       tags: always
       include_vars: stage_vars/{{ stage }}.yml
-      include_vars: stage_vars/secrets.yml
+      include_vars: stage_vars/secret.yml
   roles:
     - { role: common, tags: common }
     - { role: supla, tags: supla }
