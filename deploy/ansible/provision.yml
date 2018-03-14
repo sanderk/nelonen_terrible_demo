@@ -17,6 +17,8 @@
     - { role: supla, tags: supla }
     - { role: nginx, tags: nginx }
     - { role: php, tags: php }
+    - { role: composer, tags: composer }
+    - { role: drush, tags: drush }
 
   vars:
     - nginx_enable_monitor: true  # default=true, will setup default server responding to /monitor/monitor.html
