@@ -11,13 +11,13 @@ module "web_server" {
 #  image  = "centos7-201801241238"
 }
 
-resource "aws_iam_user" "petri.kallberg@sanoma.com" {
+resource "aws_iam_user" "pkallberg" {
 	name = "petri.kallberg@sanoma.com"
 }
 
 resource "aws_iam_user_policy" "my_policy" {
   name = "test"
-  user = "${aws_iam_user.lb.name}"
+  user = "${aws_iam_user.pkallberg.name}"
 
   policy = <<EOF
 {
