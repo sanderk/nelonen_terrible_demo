@@ -33,6 +33,7 @@
 
 - name: download artifact
   aws_s3:
+    ignore_nonexistent_bucket: true
     aws_access_key: "{{ s3_access_key }}"
     aws_secret_key: "{{ s3_secret_key }}"
     bucket: "snm-nl-nelo-novelist-test-va-webbucket-25433c0e"
