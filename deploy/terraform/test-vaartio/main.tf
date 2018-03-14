@@ -121,8 +121,8 @@ module "cloudfront" {
 
 #### Memcached
 
-#module "novelist_memcached" {
-#  source = "git::ssh://git@source.sanoma.com:7999/tfmod/memcached.git?ref=0.0.1"
-#  tags = "${var.tags}"
-#  node_type = "cache.t2.small"
-#}
+module "novelist_memcached" {
+  source = "git::ssh://git@source.sanoma.com:7999/tfmod/memcached.git?ref=0.0.1"
+  tags = "${var.tags}"
+  node_type = "cache.t2.small"
+}

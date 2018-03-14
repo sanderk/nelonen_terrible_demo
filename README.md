@@ -12,4 +12,6 @@ terrible apply nelonen/novelist/test-vaartio [plan-id-from-the-console-output]
 terrible plan nelonen/novelist/test-vaartio destroy
  
 terrible apply nelonen/novelist/test-vaartio [plan-id-from-the-console-output]
+
+terrible ansible nelonen/novelist/test-vaartio
 ```
