@@ -27,7 +27,7 @@
 
 - name: Install dependencies
   yum:
-    pkg: "python-boto.noarch"
+    pkg: "python-boto3.noarch"
     state: present
 
 - name: download artifact
