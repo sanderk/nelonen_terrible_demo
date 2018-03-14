@@ -25,10 +25,11 @@
 #        - "index.php"
 
 
-- name: Install dependencies
-  yum:
-    pkg: "python-boto3.noarch"
-    state: present
+- pip:
+    name: botocore
+
+- pip:
+    name: boto3
 
 - name: download artifact
   s3:
