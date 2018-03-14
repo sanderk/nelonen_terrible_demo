@@ -10,3 +10,27 @@ module "web_server" {
 #  vpc_id = "vpc-0e942268"
 #  image  = "centos7-201801241238"
 }
+
+resource "aws_iam_user" "petri.kallberg@sanoma.com" {
+	name = "petri.kallberg@sanoma.com"
+}
+
+resource "aws_iam_user_policy" "my_policy" {
+  name = "test"
+  user = "${aws_iam_user.lb.name}"
+
+  policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Action": [
+        "*"
+      ],
+      "Effect": "Allow",
+      "Resource": "*"
+    }
+  ]
+}
+EOF
+}
