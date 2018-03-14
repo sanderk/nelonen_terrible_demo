@@ -11,3 +11,7 @@
 - include: system.yml
   static: false
   when: php_version == 'system'
+
+- include: drush.yml
+  static: false
+  when: php_version == 'system'
