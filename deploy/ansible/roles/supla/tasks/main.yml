@@ -53,13 +53,13 @@
     dest: /data/home/{{ product }}/public
     remote_src: yes
 
-  - name: Create settings.local.php
-    template: >
-      src={{ item }}.j2
-      dest=/data/home/{{ product }}/public/sites/web/default/{{ item }}
-      mode=0644
-    with_items:
-      - "settings.local.php"
+- name: Create settings.local.php
+  template: >
+    src={{ item }}.j2
+    dest=/data/home/{{ product }}/public/sites/web/default/{{ item }}
+    mode=0644
+  with_items:
+    - "settings.local.php"
 
 
 #    - name: Install Postgresql client package
