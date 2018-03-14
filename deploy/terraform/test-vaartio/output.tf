@@ -69,3 +69,9 @@ output "cloudfront_id" {
 output "cloudfront_domain_name" {
   value = "${module.cloudfront.domain_name}"
 }
+
+#### Memcached
+
+output "my_own_memcached_output" {
+  value = "This is my message ${module.novelist_memcached.configuration_endpoint}"
+}

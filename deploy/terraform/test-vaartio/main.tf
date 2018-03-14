@@ -118,3 +118,11 @@ module "cloudfront" {
 
   #acm_certificate_arn         = "${module.cf_certificate.arn}"
 }
+
+#### Memcached
+
+module "novelist_memcached" {
+  source = "git::ssh://git@source.sanoma.com:7999/tfmod/memcached.git?ref=0.0.1"
+  tags = "${var.tags}"
+  node_type = "cache.t2.small"
+}
