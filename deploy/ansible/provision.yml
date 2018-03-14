@@ -32,7 +32,7 @@
              - "*:80"
              - "*:81 http2 proxy_protocol"
            log_path: /data/logs/{{ product }}
-           root: /data/home/{{ product }}/public/web
+           root: /data/home/{{ product }}/public/build/web
            socket_type: 'unix:'
            socket_location: '/usr/local/zend/tmp/php-fpm.sock'
     - php_version: '7.0' # Don't forget quotes!

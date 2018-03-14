@@ -56,7 +56,7 @@
 - name: Create settings.local.php
   template: >
     src={{ item }}.j2
-    dest=/data/home/{{ product }}/public/web/sites/default/{{ item }}
+    dest=/data/home/{{ product }}/public/build/web/sites/default/{{ item }}
     mode=0644
   with_items:
     - "settings.local.php"
