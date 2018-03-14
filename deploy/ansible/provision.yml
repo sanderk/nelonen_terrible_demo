@@ -39,37 +39,37 @@
     - php_enable_fpm: true
 
   environment:
-    SITE_NAME: {{ V_SITE_NAME }}
-    COOKIE_DOMAIN: {{ V_COOKIE_DOMAIN }}
-    BASE_URL: {{ v_BASE_URL }}
-    FILE_PRIVATE_PATH: {{ V_FILE_PRIVATE_PATH }}
+    SITE_NAME: "{{ V_SITE_NAME }}"
+    COOKIE_DOMAIN: "{{ V_COOKIE_DOMAIN }}"
+    BASE_URL: "{{ V_BASE_URL }}"
+    FILE_PRIVATE_PATH: "{{ V_FILE_PRIVATE_PATH }}"
 
     # Database
-    DB_NAME: {{ rds_db_name }}
-    DB_USERNAME: {{ rds_db_username }}
-    DB_PASSWORD: {{ rds_db_password }}
-    DB_HOSTNAME: {{ rds_db_host }}
-    DB_PORT: {{ rds_db_port }}
+    DB_NAME: "{{ rds_db_name }}"
+    DB_USERNAME: "{{ rds_db_username }}"
+    DB_PASSWORD: "{{ rds_db_password }}"
+    DB_HOSTNAME: "{{ rds_db_host }}"
+    DB_PORT: "{{ rds_db_port }}"
 
-    FILE_PUBLIC_BASE_URL: {{ V_FILE_PUBLIC_BASE_URL }}
+    FILE_PUBLIC_BASE_URL: "{{ V_FILE_PUBLIC_BASE_URL }}"
 
     ## Sacu
-    SAPI_CLIENT_ID: {{ V_SAPI_CLIENT_ID }}
-    SAPI_CLIENT_SECRET: {{ V_SAPI_CLIENT_SECRET }}
-    SAPI_SUBSCRIPTION_KEY: {{ V_SAPI_SUBSCRIPTION_KEY }}
-    SAPI_BASE_URI: {{ V_SAPI_BASE_URI }}
-    SACU_ENDPOINT_BASE_URI: {{ V_SACU_ENDPOINT_BASE_URI }}
-    SACU_SANOMA_ACCOUNT_SETTINGS_URI: {{ V_SACU_SANOMA_ACCOUNT_SETTINGS_URI }}
-    SACU_AUTHORIZED_URI: {{ V_SACU_AUTHORIZED_URI }}
-    SACU_SHARED_COOKIE_DOMAIN: {{ V_SACU_SHARED_COOKIE_DOMAIN }}
+    SAPI_CLIENT_ID: "{{ V_SAPI_CLIENT_ID }}"
+    SAPI_CLIENT_SECRET: "{{ V_SAPI_CLIENT_SECRET }}"
+    SAPI_SUBSCRIPTION_KEY: "{{ V_SAPI_SUBSCRIPTION_KEY }}"
+    SAPI_BASE_URI: "{{ V_SAPI_BASE_URI }}"
+    SACU_ENDPOINT_BASE_URI: "{{ V_SACU_ENDPOINT_BASE_URI }}"
+    SACU_SANOMA_ACCOUNT_SETTINGS_URI: "{{ V_SACU_SANOMA_ACCOUNT_SETTINGS_URI }}"
+    SACU_AUTHORIZED_URI: "{{ V_SACU_AUTHORIZED_URI }}"
+    SACU_SHARED_COOKIE_DOMAIN: "{{ V_SACU_SHARED_COOKIE_DOMAIN }}"
 
     # Cos
-    COS_API_KEY: {{ V_COS_API_KEY }}
-    COS_BASE_URL: {{ V_COS_BASE_URL }}
+    COS_API_KEY: "{{ V_COS_API_KEY }}"
+    COS_BASE_URL: "{{ V_COS_BASE_URL }}"
 
     # AWS S3
-    S3_KEY: {{ V_S3_KEY }}
-    S3_SECRET: {{ V_S3_SECRET }}
-    S3_BUCKET: {{ V_S3_BUCKET }}
-    S3_CNAME: {{ V_S3_CNAME }}
+    S3_KEY: "{{ V_S3_KEY }}"
+    S3_SECRET: "{{ V_S3_SECRET }}"
+    S3_BUCKET: "{{ V_S3_BUCKET }}"
+    S3_CNAME: "{{ V_S3_CNAME }}"
 
