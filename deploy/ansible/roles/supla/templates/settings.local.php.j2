@@ -1,0 +1,65 @@
+<?php
+header("Access-Control-Allow-Origin: *");
+
+$conf['site_name'] = "{{ SITE_NAME }}";
+
+$cookie_domain = "{{ COOKIE_DOMAIN }}";
+$base_url = "{{ BASE_URL }}";
+
+$conf['file_private_path'] = "{{ FILE_PRIVATE_PATH }}";
+
+$databases['default']['default'] = array (
+  'database' => "{{ rds_db_name }}",
+  'username' => "{{ rds_db_username }}",
+  'password' => "{{ rds_db_password }}",
+  'prefix' => '',
+  'host' => "{{ rds_db_host }}",
+  'port' => "{{ rds_db_port }}",
+  'namespace' => 'Drupal\\Core\\Database\\Driver\\mysql',
+  'driver' => 'mysql',
+);
+
+$settings['file_public_base_url'] = "{{ FILE_PUBLIC_BASE_URL }}";
+
+$settings['trusted_host_patterns'] = array(
+  '^127\.0\.0\.1$',
+  '^localhost$',
+  '^novelist\-staging\.nelonenmedia\.fi$',
+  '^novelist\.nelonenmedia\.fi$',
+  '^cms\.nelonenmedia\.dev$'
+);
+
+
+// SACU MODULE STAGING CONFIG.
+$config['sacu.settings']['sapi']['client_id'] = "{{ SAPI_CLIENT_ID }}";
+$config['sacu.settings']['sapi']['client_secret'] = "{{ SAPI_CLIENT_SECRET }}";
+$config['sacu.settings']['sapi']['subscription_key'] = "{{ SAPI_SUBSCRIPTION_KEY }}";
+$config['sacu.settings']['sapi']['base_uri'] = "{{ SAPI_BASE_URI }}";
+
+$config['sacu.settings']['sso_endpoints']['base_uri'] = "{{ SACU_ENDPOINT_BASE_URI }}";
+$config['sacu.settings']['session']['cookie_domain'] = "{{ SACU_SHARED_COOKIE_DOMAIN }}";
+$config['sacu.settings']['sanoma_account_settings_uri'] = "{{ SACU_SANOMA_ACCOUNT_SETTINGS_URI }}";
+
+
+# COS (Content Output System) configuration.
+$config['cos']['api_key'] = "{{ COS_API_KEY }}";
+$config['cos']['base_uri'] = "{{ COS_BASE_URL }}";
+
+// S3 integration with Flysystem.
+$schemes = [
+  's3' => [
+    'driver' => 's3_nelonen',
+    'config' => [
+      'key'    => "{{ S3_KEY }}",
+      'secret' => "{{ S3_SECRET }}",
+      'region' => 'eu-west-1',
+      'bucket' => "{{ S3_BUCKET }}",
+      'prefix' => 'novelist',
+      'cname'  => "{{ S3_CNAME }}",
+      'protocol' => 'https',
+    ],
+    'cache' => TRUE,
+  ],
+];
+$settings['flysystem'] = $schemes;
+

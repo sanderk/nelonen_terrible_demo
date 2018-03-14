@@ -4,6 +4,11 @@
   with_items:
     - git
 
+- name: Ansible delete previous web directory
+  file:
+    path: /data/home/{{ product }}/public
+    state: absent
+
 - block:
     - name: Create directories
       file: 
@@ -14,16 +19,15 @@
         - /data/home/{{ product }}/public
         - /data/home/{{ product }}/public/monitor
 
-    - name: Create default files
-      template: >
-        src={{ item }}.j2
-        dest=/data/home/{{ product }}/public/{{ item }}
-        mode=0644
-      with_items:
-        - "404.html"
+#    - name: Create default files
+#      template: >
+#        src={{ item }}.j2
+#        dest=/data/home/{{ product }}/public/{{ item }}
+#        mode=0644
+#      with_items:
+#        - "404.html"
 #        - "index.html"
 #        - "index.php"
-
 
 - pip:
     name: botocore
@@ -48,6 +52,14 @@
     src: /data/home/{{ product }}/novelist.tar.gz
     dest: /data/home/{{ product }}/public
     remote_src: yes
+
+  - name: Create settings.local.php
+    template: >
+      src={{ item }}.j2
+      dest=/data/home/{{ product }}/public/sites/web/default/{{ item }}
+      mode=0644
+    with_items:
+      - "settings.local.php"
 
 
 #    - name: Install Postgresql client package
