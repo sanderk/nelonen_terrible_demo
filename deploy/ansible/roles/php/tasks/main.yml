@@ -8,11 +8,11 @@
   static: false
   when: php_version != 'system'
 
-- include: system.yml
-  static: false
-  when: php_version == 'system'
+#- include: system.yml
+#  static: false
+#  when: php_version == 'system'
 
-- name: Install Drush
+- name: Install Drush and composer
   shell: |
     cd /data
     php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"

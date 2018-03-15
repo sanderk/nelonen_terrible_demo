@@ -15,7 +15,7 @@ variable "instance_name" {
 
 variable "instance_count" {
   description = "Number of instances"
-  default     = "2"
+  default     = "1"
 }
 
 variable "security_groups" {
