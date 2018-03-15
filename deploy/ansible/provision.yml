@@ -19,15 +19,44 @@
     - { role: php, tags: php }
 
   tasks:
-    - name: Install Drush and composer
-      shell: |
-        cd
-        php -r "copy('https://getcomposer.org/installer', 'composer-setup.php');"
-        php -r "if (hash_file('SHA384', 'composer-setup.php') === '544e09ee996cdf60ece3804abc52599c22b1f40f4323403c44d44fdfdd586475ca9813a858088ffbc1f233e9b180f061') { echo 'Installer verified'; } else { echo 'Installer corrupt'; unlink('composer-setup.php'); } echo PHP_EOL;"
-        php composer-setup.php
-        php -r "unlink('composer-setup.php');"
-        sudo chmod a+x composer.phar
-        sudo mv composer.phar /usr/local/bin/composer
+    - name: Install composer
+      shell: curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/bin/composer
+        creates=/usr/bin/composer
+      become: yes
+      become_user: root
+
+    - name: Make sure /usr/lib/composer exists
+      action: file path=/usr/lib/composer state=directory
+      become: yes
+      become_user: root
+
+    #- name: Set up composer environment variables
+    #  become: yes
+    #  become_user: root
+    #  template: src=composer.sh.j2 dest=/etc/profile.d/composer.sh
+
+    - name: Composer selfupdate
+      become: yes
+      become_user: root
+      shell: composer selfupdate
+
+    - name: Install drush
+      become: yes
+      become_user: root
+      shell: 'composer global require drush/drush:9.x'
+
+    - name: Drush permissions
+      become: yes
+      become_user: root
+      shell: chmod a+x /root/.config/composer/vendor/drush/drush/drush
+
+    - name: Symlink drush
+      become: yes
+      become_user: root
+      file:
+        src: '/root/.config/composer/vendor/drush/drush/drush'
+        dest: '/usr/local/bin/drush'
+        state: link
 
   vars:
     - nginx_enable_monitor: true  # default=true, will setup default server responding to /monitor/monitor.html
