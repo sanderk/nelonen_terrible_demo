@@ -4,9 +4,15 @@
     msg: "Unsupported PHP version {{ php_version }}!"
   when: php_version not in php_versions
 
+- debug:
+    msg: "DEBUG: before Zend"
+
 - include: zend.yml
   static: false
   when: php_version != 'system'
+
+- debug:
+    msg: "DEBUG: after Zend"
 
 #- include: system.yml
 #  static: false
@@ -21,3 +27,6 @@
     php -r "unlink('composer-setup.php');"
     sudo chmod a+x composer.phar
     sudo mv composer.phar /usr/local/bin/composer
+
+- debug:
+    msg: "DEBUG: End"
