@@ -20,38 +20,17 @@
 
   tasks:
     - name: Download composer
-      get_url:
-        url: https://getcomposer.org/installer
-        dest: /root/composer.phar
-        mode: 0555
-    - name: Move composer
-      shell: mv /root/composer.phar /usr/local/bin/composer && chmod a+x /usr/local/bin/composer
-        creates=/usr/local/bin/composer
       become: yes
       become_user: root
-
-    #- name: Composer selfupdate
-    #  become: yes
-    #  become_user: root
-    #  shell: /usr/local/bin/composer selfupdate
-
-    - name: Install drush
-      become: yes
-      become_user: root
-      shell: '/usr/local/bin/composer global require drush/drush:9.x'
-
-    - name: Drush permissions
-      become: yes
-      become_user: root
-      shell: chmod a+x /root/.config/composer/vendor/drush/drush/drush
-
-    - name: Symlink drush
-      become: yes
-      become_user: root
-      file:
-        src: '/root/.config/composer/vendor/drush/drush/drush'
-        dest: '/usr/local/bin/drush'
-        state: link
+      shell: |
+        curl -sS https://getcomposer.org/installer | php
+        mv composer.phar /usr/local/bin/composer
+        git clone https://github.com/drush-ops/drush.git /usr/local/src/drush
+        cd /usr/local/src/drush
+        git checkout 8.x
+        ln -s /usr/local/src/drush/drush /usr/local/bin/drush
+        composer install
+        drush --version
 
   vars:
     - nginx_enable_monitor: true  # default=true, will setup default server responding to /monitor/monitor.html
