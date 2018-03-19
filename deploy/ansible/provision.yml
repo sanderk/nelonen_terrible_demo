@@ -22,9 +22,18 @@
     - name: Download composer
       become: yes
       become_user: root
+      get_url:
+        url: https://getcomposer.org/installer
+        dest: /root/composer.phar
+        mode: 0555
+
+    - name: Install composer and drush
+      become: yes
+      become_user: root
       shell: |
-        curl -sS https://getcomposer.org/installer | php
-        mv composer.phar /usr/local/bin/composer
+        chmod /root/composer.phar a+x
+        php /root/composer.phar
+        mv /root/composer.phar /usr/local/bin/composer
         git clone https://github.com/drush-ops/drush.git /usr/local/src/drush
         cd /usr/local/src/drush
         git checkout 8.x
