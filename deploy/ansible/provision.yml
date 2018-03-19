@@ -19,31 +19,26 @@
     - { role: php, tags: php }
 
   tasks:
-    - name: Install composer
-      shell: curl -sS https://getcomposer.org/installer | php && mv composer.phar /usr/bin/composer
-        creates=/usr/bin/composer
+    - name: Download composer
+      get_url:
+        url: https://getcomposer.org/installer
+        dest: /root/composer.phar
+        mode: 0555
+    - name: Move composer
+      shell: mv /root/composer.phar /usr/local/bin/composer && chmod a+x /usr/local/bin/composer
+        creates=/usr/local/bin/composer
       become: yes
       become_user: root
 
-    - name: Make sure /usr/lib/composer exists
-      action: file path=/usr/lib/composer state=directory
-      become: yes
-      become_user: root
-
-    #- name: Set up composer environment variables
+    #- name: Composer selfupdate
     #  become: yes
     #  become_user: root
-    #  template: src=composer.sh.j2 dest=/etc/profile.d/composer.sh
-
-    - name: Composer selfupdate
-      become: yes
-      become_user: root
-      shell: composer selfupdate
+    #  shell: /usr/local/bin/composer selfupdate
 
     - name: Install drush
       become: yes
       become_user: root
-      shell: 'composer global require drush/drush:9.x'
+      shell: '/usr/local/bin/composer global require drush/drush:9.x'
 
     - name: Drush permissions
       become: yes
